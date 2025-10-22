@@ -11,7 +11,6 @@ import { ListView } from '@/components/views/ListView'
 import { useTasksStore } from '@/store/useTasksStore'
 import { useTasks } from '@/hooks/useTasks'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 export default function DashboardPage() {
@@ -53,26 +52,18 @@ export default function DashboardPage() {
       <div className="container mx-auto p-4 md:p-6 space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="flex items-center gap-3">
-            <Link href="/">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Personal Process Hub
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                {viewMode === 'portfolio' && '📊 Portfolio Bubble Chart'}
-                {viewMode === 'board' && '📋 Kanban Board'}
-                {viewMode === 'table' && '📊 Data Table'}
-                {viewMode === 'map' && '🗺️ Process Map'}
-                {viewMode === 'calendar' && '📅 Calendar View'}
-                {viewMode === 'list' && '📝 List View'}
-              </p>
-            </div>
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Personal Process Hub
+            </h1>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              {viewMode === 'portfolio' && '📊 Portfolio Bubble Chart'}
+              {viewMode === 'board' && '📋 Kanban Board'}
+              {viewMode === 'table' && '📊 Data Table'}
+              {viewMode === 'map' && '🗺️ Process Map'}
+              {viewMode === 'calendar' && '📅 Calendar View'}
+              {viewMode === 'list' && '📝 List View'}
+            </p>
           </div>
           
           <div className="flex flex-wrap gap-2">
