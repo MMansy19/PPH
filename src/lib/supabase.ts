@@ -1,10 +1,14 @@
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 import { Task } from '@/types'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+// Client-side Supabase client
+export const createClient = () => createBrowserClient(supabaseUrl, supabaseKey)
+
+// Legacy export for backward compatibility
+export const supabase = createClient()
 
 export async function getTasks(): Promise<Task[]> {
   try {
