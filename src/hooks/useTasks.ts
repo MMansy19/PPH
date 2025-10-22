@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/auth'
 import { Task } from '@/types'
 import { useTasksStore } from '@/store/useTasksStore'
 
@@ -9,6 +9,7 @@ export function useTasks() {
   const [error, setError] = useState<string | null>(null)
   const { 
     tasks, 
+    currentWorkspaceId,
     setTasks, 
     addTask: addTaskToStore, 
     updateTask: updateTaskInStore, 
@@ -16,14 +17,22 @@ export function useTasks() {
   } = useTasksStore()
 
   useEffect(() => {
-    fetchTasks()
-  }, [])
+    if (currentWorkspaceId) {
+      fetchTasks()
+    }
+  }, [currentWorkspaceId])
 
   const fetchTasks = async () => {
+    if (!currentWorkspaceId) return
+    
     setLoading(true)
     setError(null)
     try {
-      const { data, error: fetchError } = await supabase.from('tasks').select('*')
+      const { data, error: fetchError } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('workspace_id', currentWorkspaceId)
+      
       if (fetchError) throw fetchError
       setTasks(data || [])
     } catch (err) {
