@@ -1,23 +1,64 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ModeSwitcher } from '@/components/Dashboard/ModeSwitcher'
 import { ExportButtons } from '@/components/Dashboard/ExportButtons'
+import { MobileMenu } from '@/components/Dashboard/MobileMenu'
+import { WorkspaceSelector } from '@/components/Dashboard/WorkspaceSelector'
 import { PortfolioBubbleChart } from '@/components/views/PortfolioBubbleChart'
 import { TableView } from '@/components/views/TableView'
 import { MapView } from '@/components/views/MapView'
 import { BoardView } from '@/components/views/BoardView'
-import { CalendarView } from '@/components/views/CalendarView'
+import { CalendarView } from '@/components/calendar/CalendarView'
 import { ListView } from '@/components/views/ListView'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { Button } from '@/components/ui/button'
 import { useTasksStore } from '@/store/useTasksStore'
 import { useTasks } from '@/hooks/useTasks'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { getCurrentUser, signOut, supabase } from '@/lib/auth'
+import { LogOut, Plus } from 'lucide-react'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { TaskForm } from '@/components/forms/TaskForm'
 
 export default function DashboardPage() {
-  const { viewMode } = useTasksStore()
-  const { loading } = useTasks()
+  const router = useRouter()
+  const { viewMode, currentWorkspaceId, setCurrentWorkspaceId } = useTasksStore()
+  const { loading: tasksLoading } = useTasks()
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  
+  const [user, setUser] = useState<any>(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  const [taskDialogOpen, setTaskDialogOpen] = useState(false)
+
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+  const checkAuth = async () => {
+    const currentUser = await getCurrentUser()
+    if (!currentUser) {
+      router.push('/login')
+    } else {
+      setUser(currentUser)
+      setAuthLoading(false)
+    }
+  }
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/login')
+  }
 
   const renderView = () => {
+    if (!currentWorkspaceId) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-gray-600">Please select or create a workspace to get started</p>
+        </div>
+      )
+    }
+
     switch (viewMode) {
       case 'portfolio':
         return <PortfolioBubbleChart />
@@ -36,13 +77,10 @@ export default function DashboardPage() {
     }
   }
 
-  if (loading) {
+  if (authLoading || tasksLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading tasks...</p>
-        </div>
+        <LoadingSpinner />
       </div>
     )
   }
@@ -66,9 +104,54 @@ export default function DashboardPage() {
             </p>
           </div>
           
-          <div className="flex flex-wrap gap-2">
-            <ExportButtons />
-            <ModeSwitcher />
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
+        </div>
+
+        {/* Workspace Selector and Controls */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+          <div className="flex items-center gap-2 flex-wrap">
+            {user && (
+              <WorkspaceSelector 
+                userId={user.id} 
+                currentWorkspaceId={currentWorkspaceId}
+                onWorkspaceChange={setCurrentWorkspaceId}
+              />
+            )}
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {currentWorkspaceId && (
+              <Dialog open={taskDialogOpen} onOpenChange={setTaskDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button size="sm" className="gap-2">
+                    <Plus className="h-4 w-4" />
+                    New Task
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Create New Task</DialogTitle>
+                    <DialogDescription>
+                      Add a new task to your workspace
+                    </DialogDescription>
+                  </DialogHeader>
+                  <TaskForm 
+                    workspaceId={currentWorkspaceId} 
+                    onClose={() => setTaskDialogOpen(false)}
+                  />
+                </DialogContent>
+              </Dialog>
+            )}
+            <div className="hidden md:flex gap-2">
+              <ModeSwitcher />
+              <ExportButtons />
+            </div>
+            {isMobile && <MobileMenu />}
           </div>
         </div>
 
