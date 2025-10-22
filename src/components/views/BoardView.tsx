@@ -2,19 +2,21 @@
 import React from 'react'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { useTasks } from '@/hooks/useTasks'
+import { useTasksStore } from '@/store/useTasksStore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DraggableTask } from '@/components/dnd/DraggableTask'
 import { Task } from '@/types'
+import { supabase } from '@/lib/auth'
 
 interface DropZoneProps {
-  status: 'todo' | 'inprogress' | 'done'
+  status: 'todo' | 'in-progress' | 'done'
   title: string
+  icon: string
   tasks: Task[]
-  onDrop: (taskId: string, newStatus: 'todo' | 'inprogress' | 'done') => void
+  onDrop: (taskId: string, newStatus: 'todo' | 'in-progress' | 'done') => void
 }
 
-function DropZone({ status, title, tasks, onDrop }: DropZoneProps) {
+function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'task',
     drop: (item: { id: string; task: Task }) => {
@@ -25,20 +27,26 @@ function DropZone({ status, title, tasks, onDrop }: DropZoneProps) {
     }),
   }), [status, onDrop])
 
+  const bgColor = status === 'todo' ? 'bg-gray-50' : status === 'in-progress' ? 'bg-blue-50' : 'bg-green-50'
+  const borderColor = status === 'todo' ? 'border-gray-200' : status === 'in-progress' ? 'border-blue-200' : 'border-green-200'
+
   return (
     <Card 
       ref={drop as any}
-      className={`min-w-[300px] flex-1 transition-colors ${isOver ? 'bg-blue-50 border-blue-300' : ''}`}
+      className={`min-w-[300px] flex-1 transition-all ${isOver ? 'ring-2 ring-blue-400 scale-[1.02]' : ''} ${borderColor}`}
     >
-      <CardHeader className="pb-3">
+      <CardHeader className={`pb-3 ${bgColor}`}>
         <CardTitle className="text-lg flex items-center justify-between">
-          <span>{title}</span>
-          <span className="text-sm font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded">
+          <span className="flex items-center gap-2">
+            <span>{icon}</span>
+            <span>{title}</span>
+          </span>
+          <span className="text-sm font-normal text-gray-500 bg-white px-2 py-1 rounded">
             {tasks.length}
           </span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 max-h-[600px] overflow-y-auto">
+      <CardContent className="space-y-2 max-h-[600px] overflow-y-auto pt-4">
         {tasks.length === 0 ? (
           <div className="text-center py-8 text-gray-400 text-sm">
             Drop tasks here
@@ -54,51 +62,69 @@ function DropZone({ status, title, tasks, onDrop }: DropZoneProps) {
 }
 
 function BoardViewContent() {
-  const { tasks, updateTask } = useTasks()
+  const { currentWorkspaceId, tasks, updateTask } = useTasksStore()
 
-  // Group tasks by status
-  const todoTasks = tasks.filter(t => !t.completed && t.priority !== 'high')
-  const inProgressTasks = tasks.filter(t => !t.completed && t.priority === 'high')
-  const doneTasks = tasks.filter(t => t.completed)
+  // Filter tasks by current workspace and group by status
+  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
+  const todoTasks = workspaceTasks.filter(t => t.status === 'todo')
+  const inProgressTasks = workspaceTasks.filter(t => t.status === 'in-progress')
+  const doneTasks = workspaceTasks.filter(t => t.status === 'done')
 
-  const handleDrop = async (taskId: string, newStatus: 'todo' | 'inprogress' | 'done') => {
-    const updates: Partial<Task> = {}
-    
-    if (newStatus === 'done') {
-      updates.completed = true
-    } else if (newStatus === 'inprogress') {
-      updates.completed = false
-      updates.priority = 'high'
-    } else {
-      updates.completed = false
-      updates.priority = 'medium'
+  const handleDrop = async (taskId: string, newStatus: 'todo' | 'in-progress' | 'done') => {
+    const updates: Partial<Task> = {
+      status: newStatus,
+      completed: newStatus === 'done'
     }
     
-    await updateTask(taskId, updates)
+    // Update in Supabase
+    try {
+      const { error } = await supabase
+        .from('tasks')
+        .update(updates)
+        .eq('id', taskId)
+      
+      if (error) throw error
+      
+      // Update local state
+      updateTask(taskId, updates)
+    } catch (error) {
+      console.error('Failed to update task status:', error)
+    }
+  }
+
+  if (!currentWorkspaceId) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-600">Please select a workspace to view tasks</p>
+      </div>
+    )
   }
 
   return (
     <div className="w-full">
       <div className="mb-4">
         <h2 className="text-2xl font-bold">Kanban Board</h2>
-        <p className="text-gray-500 text-sm">Drag and drop tasks between columns</p>
+        <p className="text-gray-500 text-sm">Drag and drop tasks between columns to update status</p>
       </div>
       <div className="flex gap-4 overflow-x-auto pb-4">
         <DropZone 
           status="todo" 
-          title="📋 To Do" 
+          title="To Do" 
+          icon="📝"
           tasks={todoTasks}
           onDrop={handleDrop}
         />
         <DropZone 
-          status="inprogress" 
-          title="🔄 In Progress" 
+          status="in-progress" 
+          title="In Progress" 
+          icon="⚡"
           tasks={inProgressTasks}
           onDrop={handleDrop}
         />
         <DropZone 
           status="done" 
-          title="✅ Done" 
+          title="Done" 
+          icon="✅"
           tasks={doneTasks}
           onDrop={handleDrop}
         />
