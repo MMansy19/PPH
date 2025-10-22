@@ -44,16 +44,21 @@ export function LoginForm() {
       const { error } = await signIn(email, password)
       
       if (error) {
+        console.error('Login error details:', error)
+        
         if (error.message.includes('Invalid login credentials')) {
-          setAuthError('Invalid email or password. Please try again.')
+          setAuthError('Invalid email or password. Please check your credentials and try again. If you haven\'t registered yet, please sign up first.')
         } else if (error.message.includes('Email not confirmed')) {
           setAuthError('Please check your email and click the confirmation link before signing in.')
+        } else if (error.message.includes('User not found')) {
+          setAuthError('No account found with this email. Please sign up first.')
         } else {
-          setAuthError(error.message || 'An error occurred during sign in.')
+          setAuthError(`${error.message || 'An error occurred during sign in.'} - Please try signing up first if you don't have an account.`)
         }
       }
     } catch (error) {
-      setAuthError('An unexpected error occurred. Please try again.')
+      console.error('Unexpected login error:', error)
+      setAuthError('An unexpected error occurred. Please try again or contact support.')
     } finally {
       setIsSubmitting(false)
     }

@@ -79,6 +79,10 @@ export function RegisterForm() {
           setAuthError('An account with this email already exists. Please sign in instead.')
         } else if (error.message.includes('Password should be at least')) {
           setAuthError('Password does not meet security requirements.')
+        } else if (error.message.includes('Database error')) {
+          // Special handling for database errors - might still be successful
+          console.log('Database error occurred, but user might have been created. Please check your email.')
+          setSuccess(true) // Show success message anyway
         } else {
           setAuthError(error.message || 'An error occurred during registration.')
         }

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 /**
  * Hook to protect routes that require authentication
  */
-export function useRequireAuth(redirectTo = '/login') {
+export function useRequireAuth(redirectTo = '/auth/login') {
   const { user, loading } = useAuth()
   const router = useRouter()
 

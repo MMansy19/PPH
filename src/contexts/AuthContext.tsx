@@ -54,22 +54,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    
+    if (error) {
+      console.error('Sign in error:', error)
+    }
+    
     setLoading(false)
     return { error }
   }
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     setLoading(true)
-    const { error } = await supabase.auth.signUp({ 
-      email, 
-      password,
-      options: {
-        data: fullName ? { full_name: fullName } : undefined
+    
+    try {
+      const { data, error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          data: fullName ? { full_name: fullName } : undefined,
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      })
+      
+      // Check if user was actually created despite the error
+      const userCreated = data?.user?.id && data?.user?.email
+      
+      if (error) {
+        console.error('Sign up error:', error)
+        
+        // If it's a database error but user was created, treat as success
+        if (error.message.includes('Database error') && userCreated) {
+          console.log('User created successfully despite database trigger error. Check your email for confirmation.', data)
+          setLoading(false)
+          return { error: null } // Treat as success
+        }
+        
+        // Provide more helpful error messages for actual failures
+        if (error.message.includes('Database error')) {
+          console.error('Database setup issue. Please check your Supabase configuration.')
+        }
+      } else {
+        console.log('Sign up successful. Check your email for confirmation.', data)
       }
-    })
-    setLoading(false)
-    return { error }
+      
+      setLoading(false)
+      return { error: userCreated && error?.message.includes('Database error') ? null : error }
+    } catch (err) {
+      console.error('Unexpected signup error:', err)
+      setLoading(false)
+      return { error: { message: 'An unexpected error occurred during signup' } }
+    }
   }
 
   const signOut = async () => {
@@ -78,7 +113,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!error) {
       setUser(null)
       setSession(null)
-      window.location.href = '/login'
+      window.location.href = '/auth/login'
     }
     setLoading(false)
     return { error }

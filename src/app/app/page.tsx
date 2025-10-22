@@ -38,7 +38,7 @@ export default function DashboardPage() {
   const checkAuth = async () => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
-      router.push('/login')
+      router.push('/auth/login')
     } else {
       setUser(currentUser)
       setAuthLoading(false)
@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
   const handleSignOut = async () => {
     await signOut()
-    router.push('/login')
+    router.push('/auth/login')
   }
 
   const renderView = () => {
