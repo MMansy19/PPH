@@ -97,7 +97,7 @@ export function Footer() {
                   <Github className="h-4 w-4" />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/mahmoud-mansy" 
+                href="https://www.linkedin.com/in/mahmood-mansy" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-colors"
@@ -106,7 +106,7 @@ export function Footer() {
                   <Linkedin className="h-4 w-4" />
                 </a>
                 <a 
-                  href="mailto:mahmoud.mansy@example.com" 
+                  href="mailto:mahmoud2abdalfattah@gmail.com" 
                   className="w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-colors"
                   aria-label="Email"
                 >

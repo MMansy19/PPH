@@ -212,7 +212,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Portfolio: [mahmoud-mansy.vercel.app](https://mahmoud-mansy.vercel.app/)
 - GitHub: [@MMansy19](https://github.com/MMansy19)
-- LinkedIn: [mahmoud-mansy](https://linkedin.com/in/mahmoud-mansy)
+- LinkedIn: [mahmoud-mansy](https://www.linkedin.com/in/mahmood-mansy)
 
 ---
 
