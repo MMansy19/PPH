@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, PieChart, BarChart3, Map } from 'lucide-react'
+import { ArrowRight, PieChart, BarChart3, Map, DollarSign, TrendingUp } from 'lucide-react'
 
 export function Hero() {
   return (
@@ -12,16 +12,17 @@ export function Hero() {
         <div className="max-w-6xl mx-auto text-center space-y-8 sm:space-y-12">
           <div className="space-y-4 sm:space-y-6">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-balance">
-              Personal Process Hub
+              Portfolio Financial Hub
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed">
               Visualize your portfolio with <span className="font-semibold text-purple-600">Bubble Charts</span> • 
               Organize with <span className="font-semibold text-blue-600">Boards</span> • 
-              Track with <span className="font-semibold text-pink-600">Maps</span>
+              Track with <span className="font-semibold text-pink-600">Maps</span> • 
+              Manage with <span className="font-semibold text-green-600">Financial Tools</span>
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
             <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardHeader className="pb-3 sm:pb-4">
                 <div className="flex justify-center mb-2 sm:mb-3">
@@ -50,7 +51,7 @@ export function Hero() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 sm:col-span-2 lg:col-span-1">
+            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardHeader className="pb-3 sm:pb-4">
                 <div className="flex justify-center mb-2 sm:mb-3">
                   <Map className="h-10 w-10 sm:h-12 sm:w-12 text-pink-600" />
@@ -63,6 +64,23 @@ export function Hero() {
                 </p>
               </CardContent>
             </Card>
+
+            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+              <CardHeader className="pb-3 sm:pb-4">
+                <div className="flex justify-center mb-2 sm:mb-3">
+                  <div className="relative">
+                    <DollarSign className="h-10 w-10 sm:h-12 sm:w-12 text-green-600" />
+                    <TrendingUp className="h-5 w-5 text-green-500 absolute -bottom-1 -right-1" />
+                  </div>
+                </div>
+                <CardTitle className="text-green-600 text-base sm:text-lg">Financial Hub</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Track income, expenses, budgets, and financial performance with reports
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -70,6 +88,17 @@ export function Hero() {
               <Link href="/app">
                 View Portfolio Chart
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              </Link>
+            </Button>
+            <Button 
+              size="lg" 
+              asChild 
+              variant="outline" 
+              className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 touch-target w-full sm:w-auto border-green-600 text-green-600 hover:bg-green-50"
+            >
+              <Link href="/app/financial">
+                Financial Dashboard
+                <DollarSign className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
             </Button>
           </div>
@@ -94,7 +123,7 @@ export function Hero() {
           </div>
 
           <p className="text-xs sm:text-sm text-gray-400 text-balance">
-            No signup required • Export to PNG/SVG/PDF • Mobile responsive
+            Portfolio Management • Financial Tracking • Export to PNG/SVG/PDF • Mobile Responsive
           </p>
         </div>
       </div>

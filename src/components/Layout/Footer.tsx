@@ -117,19 +117,6 @@ export function Footer() {
           <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
             © {currentYear} Personal Process Hub. All rights reserved.
           </p>
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-400 text-center">
-            <span>Built with</span>
-            <span className="text-red-500">♥</span>
-            <span>by</span>
-            <a 
-              href="https://mahmoud-mansy.vercel.app/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="font-medium text-blue-400 hover:text-blue-300 transition-colors touch-target"
-            >
-              Mahmoud Mansy
-            </a>
-          </div>
         </div>
       </div>
     </footer>

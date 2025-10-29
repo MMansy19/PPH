@@ -12,13 +12,18 @@ export const metadata: Metadata = {
     default: 'PFH - Portfolio Financial Hub | Portfolio Management & Financial Tracking',
     template: '%s | PFH - Portfolio Financial Hub'
   },
-  description: 'Portfolio Financial Hub (PFH) - Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and data tables. Track finances, manage tasks, and optimize your project portfolio. Export to PNG, PDF, and CSV.',
+  description: 'Portfolio Financial Hub (PFH) - Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and data tables. Track finances, manage budgets, expenses, and income with comprehensive financial analytics. Export to PNG, PDF, and CSV.',
   keywords: [
     'portfolio management',
+    'financial tracking',
     'task management',
     'bubble chart',
     'kanban board',
     'process map',
+    'financial management',
+    'expense tracking',
+    'budget management',
+    'income tracking',
     'project visualization',
     'drag and drop',
     'data visualization',
@@ -30,6 +35,8 @@ export const metadata: Metadata = {
     'project planning',
     'task board',
     'workflow management',
+    'financial analytics',
+    'financial dashboard',
     'react flow',
     'next.js app'
   ],
@@ -46,10 +53,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'PPH - Personal Process Hub | Portfolio Management & Task Visualization',
-    description: 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, and process maps. Export to PNG, PDF, CSV.',
+    title: 'PFH - Portfolio Financial Hub | Portfolio Management & Financial Tracking',
+    description: 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and comprehensive financial tracking tools. Export to PNG, PDF, CSV.',
     url: 'https://pph.vercel.app',
-    siteName: 'Personal Process Hub',
+    siteName: 'Portfolio Financial Hub',
     images: [
       {
         url: '/logo.png',
@@ -64,7 +71,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'PFH - Portfolio Financial Hub',
-    description: 'Portfolio management with bubble charts, Kanban boards & process maps',
+    description: 'Portfolio management with bubble charts, Kanban boards, process maps & financial tracking',
     images: ['/logo.png'],
     creator: '@MMansy19', // Update with your Twitter handle
   },
@@ -82,7 +89,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/logo.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico' },
       { url: '/logo.png', sizes: '192x192' },
     ],
     apple: [
