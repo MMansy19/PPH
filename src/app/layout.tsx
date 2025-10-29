@@ -113,12 +113,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased bg-background text-foreground`}>
+      <body className={`${inter.className} antialiased`}>
         <Providers>
-          <div className="min-h-screen flex flex-col">
+          <div className="relative min-h-screen flex flex-col bg-background text-foreground">
             <Header />
-            <main className="flex-1 pt-14 sm:pt-16">
-              {children}
+            <main className="flex-1 pt-14 sm:pt-16 relative">
+              <div className="min-h-full">
+                {children}
+              </div>
             </main>
             <Footer />
           </div>
