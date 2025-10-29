@@ -98,8 +98,6 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   verification: {
     google: 'your-google-verification-code', // Add after Google Search Console setup
-    // yandex: 'your-yandex-verification-code',
-    // bing: 'your-bing-verification-code',
   },
   viewport: {
     width: 'device-width',
@@ -124,7 +122,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative min-h-screen flex flex-col bg-background text-foreground">
             <Header />
-            <main className="flex-1 pt-14 sm:pt-16 relative">
+            <main className="flex-1 pt-10 sm:pt-12 relative">
               <div className="min-h-full">
                 {children}
               </div>
