@@ -14,7 +14,6 @@ import { ListView } from '@/components/views/ListView'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Button } from '@/components/ui/button'
 import { useTasksStore } from '@/store/useTasksStore'
-import { useTasks } from '@/hooks/useTasks'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useRequireAuth } from '@/hooks/useAuth'
 import { useAuth } from '@/contexts/AuthContext'
@@ -24,8 +23,7 @@ import { TaskForm } from '@/components/forms/TaskForm'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { viewMode, currentWorkspaceId, setCurrentWorkspaceId } = useTasksStore()
-  const { loading: tasksLoading } = useTasks()
+  const { viewMode, currentWorkspaceId, setCurrentWorkspaceId, loading: tasksLoading } = useTasksStore()
   const isMobile = useMediaQuery('(max-width: 768px)')
   
   // Use the proper auth hooks
@@ -131,11 +129,6 @@ export default function DashboardPage() {
                   <TaskForm 
                     workspaceId={currentWorkspaceId} 
                     onClose={() => setTaskDialogOpen(false)}
-                    onTaskCreated={(task) => {
-                      console.log('Task created:', task)
-                      // TODO: Refresh tasks data or add to store
-                      setTaskDialogOpen(false)
-                    }}
                   />
                 </DialogContent>
               </Dialog>
