@@ -131,6 +131,11 @@ export default function DashboardPage() {
                   <TaskForm 
                     workspaceId={currentWorkspaceId} 
                     onClose={() => setTaskDialogOpen(false)}
+                    onTaskCreated={(task) => {
+                      console.log('Task created:', task)
+                      // TODO: Refresh tasks data or add to store
+                      setTaskDialogOpen(false)
+                    }}
                   />
                 </DialogContent>
               </Dialog>

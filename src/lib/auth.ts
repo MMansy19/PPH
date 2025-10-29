@@ -1,7 +1,7 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase'
 import type { Session, User } from '@supabase/supabase-js'
 
-export const supabase = createClientComponentClient()
+export const supabase = createClient()
 
 export interface AuthState {
   user: User | null
