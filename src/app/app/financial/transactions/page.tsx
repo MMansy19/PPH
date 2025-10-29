@@ -1,11 +1,11 @@
 'use client'
 
 import { useRequireAuth } from '@/hooks/useAuth'
-import FinancialDashboard from '@/components/financial/FinancialDashboard'
+import TransactionList from '@/components/financial/TransactionList'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
-export default function FinancialPage() {
-  const { user, loading } = useRequireAuth('/auth/login?redirect=/financial')
+export default function TransactionsPage() {
+  const { user, loading } = useRequireAuth('/auth/login?redirect=/app/financial/transactions')
 
   if (loading) {
     return (
@@ -15,5 +15,5 @@ export default function FinancialPage() {
     )
   }
 
-  return <FinancialDashboard />
+  return <TransactionList />
 }

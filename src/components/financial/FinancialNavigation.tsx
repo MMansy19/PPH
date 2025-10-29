@@ -18,22 +18,22 @@ import {
 const navigation = [
   {
     name: 'Dashboard',
-    href: '/financial',
+    href: '/app/financial',
     icon: LayoutDashboard
   },
   {
     name: 'Transactions',
-    href: '/financial/transactions',
+    href: '/app/financial/transactions',
     icon: Receipt
   },
   {
     name: 'Reports',
-    href: '/financial/reports',
+    href: '/app/financial/reports',
     icon: FileText
   },
   {
     name: 'Departments',
-    href: '/financial/departments',
+    href: '/app/financial/departments',
     icon: Building2
   }
 ]

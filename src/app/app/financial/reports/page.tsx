@@ -1,11 +1,11 @@
 'use client'
 
 import { useRequireAuth } from '@/hooks/useAuth'
-import TransactionList from '@/components/financial/TransactionList'
+import ReportsView from '@/components/financial/ReportsView'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
-export default function TransactionsPage() {
-  const { user, loading } = useRequireAuth('/auth/login?redirect=/financial/transactions')
+export default function ReportsPage() {
+  const { user, loading } = useRequireAuth('/auth/login?redirect=/app/financial/reports')
 
   if (loading) {
     return (
@@ -15,5 +15,5 @@ export default function TransactionsPage() {
     )
   }
 
-  return <TransactionList />
+  return <ReportsView />
 }

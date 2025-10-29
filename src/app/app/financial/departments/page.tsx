@@ -5,7 +5,7 @@ import DepartmentManagement from '@/components/financial/DepartmentManagement'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 export default function DepartmentsPage() {
-  const { user, loading } = useRequireAuth('/auth/login?redirect=/financial/departments')
+  const { user, loading } = useRequireAuth('/auth/login?redirect=/app/financial/departments')
 
   if (loading) {
     return (
