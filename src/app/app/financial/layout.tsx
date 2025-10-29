@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'Portfolio Financial Hub',
     images: [
       {
-        url: '/financial-og.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'PFH - Portfolio Financial Hub Dashboard - Track Income, Expenses & Budgets',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Portfolio Financial Hub - PFH',
     description: 'Economic I/O Management System - Track income, expenses & financial performance',
-    images: ['/financial-og.png'],
+    images: ['/logo.png'],
     creator: '@MMansy19',
   },
   robots: {
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/financial-logo.svg', type: 'image/svg+xml' },
+      { url: '/logo.svg', type: 'image/svg+xml' },
     ],
   },
   alternates: {

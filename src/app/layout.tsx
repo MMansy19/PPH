@@ -52,10 +52,10 @@ export const metadata: Metadata = {
     siteName: 'Personal Process Hub',
     images: [
       {
-        url: '/og-image.png', // You'll need to create this
+        url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'PPH Portfolio Bubble Chart Dashboard',
+        alt: 'PFH - Portfolio Financial Hub Dashboard',
       },
     ],
     locale: 'en_US',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PFH - Portfolio Financial Hub',
     description: 'Portfolio management with bubble charts, Kanban boards & process maps',
-    images: ['/og-image.png'],
+    images: ['/logo.png'],
     creator: '@MMansy19', // Update with your Twitter handle
   },
   robots: {
@@ -81,11 +81,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/logo.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico' },
-      { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/logo.png', sizes: '192x192' },
     ],
     apple: [
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/logo.png', sizes: '180x180' },
     ],
   },
   manifest: '/manifest.json',

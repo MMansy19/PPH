@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { 
   DropdownMenu,
@@ -36,45 +37,38 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-safari border-b border-gray-200 safe-area-top">
       <div className="container-responsive">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          {/* Logo and Name */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group touch-target">
+            {/* Logo and Name */}
+            <Link href="/" className="flex items-center gap-2 group touch-target">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur-sm group-hover:blur-md transition-all"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-1.5 sm:p-2">
-                <svg 
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-white" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" 
-                  />
-                </svg>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="PFH Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain rounded-lg"
+              />
               </div>
             </div>
-            <div className="hidden xs:block">
+            <div className="block">
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                PFH
+              PFH
               </h1>
-              <p className="text-xs text-gray-600 hidden sm:block">Financial Hub</p>
+              <p className="text-xs text-gray-600 hidden sm:block mb-1">Financial Hub</p>
             </div>
-          </Link>
+            </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
-            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 my-2 ">
+            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5">
               Home
             </Link>
             {user && (
               <>
-                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target">
+                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5 whitespace-nowrap">
                   Dashboard
                 </Link>
-                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target whitespace-nowrap">
+                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5 whitespace-nowrap">
                   Financial
                 </Link>
               </>
@@ -83,7 +77,7 @@ export function Header() {
               href="https://mahmoud-mansy.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5"
             >
               About
             </a>
@@ -186,7 +180,7 @@ export function Header() {
               
               {/* Mobile Auth Section */}
               {loading ? (
-                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-4" />
+                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-5" />
               ) : user ? (
                 <div className="flex flex-col gap-4 pt-4 border-t border-gray-100">
                   <div className="flex items-center gap-3 px-2 py-2">
