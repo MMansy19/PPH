@@ -7,9 +7,12 @@ import { CATEGORY_COLORS } from '@/lib/utils'
 import { BubbleData } from '@/types'
 
 export function PortfolioBubbleChart() {
-  const { tasks } = useTasksStore()
+  const { tasks, currentWorkspaceId } = useTasksStore()
 
-  const data: BubbleData[] = tasks.map(task => ({
+  // Filter tasks by current workspace
+  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
+
+  const data: BubbleData[] = workspaceTasks.map(task => ({
     x: task.value || 5,  // Value Score (1-10)
     y: 11 - (task.risk || 5),  // Risk inverted (low risk = high y)
     z: (task.npv || 1) * 100,   // Bubble size

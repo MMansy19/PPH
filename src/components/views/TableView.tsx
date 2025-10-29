@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useTasks } from '@/hooks/useTasks'
+import { useTasksStore } from '@/store/useTasksStore'
 import { 
   Table, 
   TableBody, 
@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { TaskForm } from '@/components/forms/TaskForm'
 import { Task } from '@/types'
 import { Edit2, Trash2, Plus } from 'lucide-react'
@@ -31,9 +32,12 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 export function TableView() {
-  const { tasks, deleteTask, loading } = useTasks()
+  const { tasks, currentWorkspaceId, removeTask, loading } = useTasksStore()
   const [showForm, setShowForm] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | undefined>(undefined)
+
+  // Filter tasks by current workspace
+  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
 
   const handleEdit = (task: Task) => {
     setEditingTask(task)
@@ -47,7 +51,7 @@ export function TableView() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this task?')) {
-      await deleteTask(id)
+      await removeTask(id)
     }
   }
 
@@ -91,14 +95,14 @@ export function TableView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tasks.length === 0 ? (
+              {workspaceTasks.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-8 text-gray-500">
                     No tasks found. Click "Add Task" to create one.
                   </TableCell>
                 </TableRow>
               ) : (
-                tasks.map((task) => (
+                workspaceTasks.map((task) => (
                   <TableRow key={task.id} className="hover:bg-gray-50">
                     <TableCell className="font-medium">
                       <div>
@@ -151,11 +155,20 @@ export function TableView() {
         </div>
       </CardContent>
       
-      <TaskForm 
-        open={showForm} 
-        onOpenChange={handleCloseForm} 
-        task={editingTask}
-      />
+      <Dialog open={showForm} onOpenChange={setShowForm}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {editingTask ? 'Edit Task' : 'Create New Task'}
+            </DialogTitle>
+          </DialogHeader>
+          <TaskForm 
+            workspaceId={currentWorkspaceId || undefined}
+            onClose={handleCloseForm} 
+            task={editingTask}
+          />
+        </DialogContent>
+      </Dialog>
     </Card>
   )
 }

@@ -6,7 +6,6 @@ import { useTasksStore } from '@/store/useTasksStore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DraggableTask } from '@/components/dnd/DraggableTask'
 import { Task } from '@/types'
-import { supabase } from '@/lib/auth'
 
 interface DropZoneProps {
   status: 'todo' | 'in-progress' | 'done'
@@ -62,7 +61,7 @@ function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
 }
 
 function BoardViewContent() {
-  const { currentWorkspaceId, tasks, updateTask } = useTasksStore()
+  const { currentWorkspaceId, tasks, editTask } = useTasksStore()
 
   // Filter tasks by current workspace and group by status
   const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
@@ -76,19 +75,10 @@ function BoardViewContent() {
       completed: newStatus === 'done'
     }
     
-    // Update in Supabase
-    try {
-      const { error } = await supabase
-        .from('tasks')
-        .update(updates)
-        .eq('id', taskId)
-      
-      if (error) throw error
-      
-      // Update local state
-      updateTask(taskId, updates)
-    } catch (error) {
-      console.error('Failed to update task status:', error)
+    // Update using the store's editTask method
+    const success = await editTask(taskId, updates)
+    if (!success) {
+      console.error('Failed to update task status')
     }
   }
 
