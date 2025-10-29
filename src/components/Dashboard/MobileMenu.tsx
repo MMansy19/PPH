@@ -9,18 +9,19 @@ export function MobileMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="md:hidden">
+        <Button variant="outline" size="icon" className="lg:hidden touch-target">
           <Menu className="h-5 w-5" />
+          <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-64">
-        <div className="space-y-4 mt-8">
-          <div className="space-y-2">
-            <h3 className="font-semibold text-sm text-gray-500 uppercase">View Mode</h3>
+      <SheetContent side="right" className="w-72 sm:w-80">
+        <div className="space-y-6 mt-6">
+          <div className="space-y-3">
+            <h3 className="font-semibold text-sm text-gray-500 uppercase tracking-wider">View Mode</h3>
             <ModeSwitcher />
           </div>
-          <div className="space-y-2">
-            <h3 className="font-semibold text-sm text-gray-500 uppercase">Export</h3>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-sm text-gray-500 uppercase tracking-wider">Export</h3>
             <ExportButtons />
           </div>
         </div>

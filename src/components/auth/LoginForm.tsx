@@ -65,24 +65,24 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-        <CardDescription>
+    <Card className="w-full max-w-md mx-auto shadow-lg">
+      <CardHeader className="text-center space-y-2 px-4 sm:px-6 pt-6 sm:pt-8">
+        <CardTitle className="text-xl sm:text-2xl font-bold">Welcome Back</CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           Sign in to your Personal Process Hub account
         </CardDescription>
       </CardHeader>
       
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <CardContent className="px-4 sm:px-6 pb-6 sm:pb-8">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {authError && (
-            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+            <div className="p-3 sm:p-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
               {authError}
             </div>
           )}
 
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label htmlFor="email" className="text-sm font-medium block">
               Email Address
             </label>
             <Input
@@ -91,7 +91,7 @@ export function LoginForm() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}
+              className={`touch-target ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
               disabled={isSubmitting}
               autoComplete="email"
               required
@@ -102,7 +102,7 @@ export function LoginForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">
+            <label htmlFor="password" className="text-sm font-medium block">
               Password
             </label>
             <div className="relative">
@@ -112,7 +112,7 @@ export function LoginForm() {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={errors.password ? 'border-red-500 focus-visible:ring-red-500 pr-10' : 'pr-10'}
+                className={`touch-target pr-12 ${errors.password ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 disabled={isSubmitting}
                 autoComplete="current-password"
                 required
@@ -121,9 +121,10 @@ export function LoginForm() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent touch-target"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isSubmitting}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4 text-gray-500" />
@@ -140,7 +141,7 @@ export function LoginForm() {
           <div className="flex items-center justify-between text-sm">
             <Link 
               href="/auth/forgot-password"
-              className="text-blue-600 hover:text-blue-800 underline"
+              className="text-blue-600 hover:text-blue-800 underline touch-target"
             >
               Forgot your password?
             </Link>
@@ -148,8 +149,9 @@ export function LoginForm() {
 
           <Button 
             type="submit" 
-            className="w-full" 
+            className="w-full touch-target" 
             disabled={isSubmitting}
+            size="lg"
           >
             {isSubmitting ? (
               <>
@@ -161,11 +163,11 @@ export function LoginForm() {
             )}
           </Button>
 
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-center text-sm text-gray-600 pt-2">
             Don't have an account?{' '}
             <Link 
               href="/auth/register" 
-              className="text-blue-600 hover:text-blue-800 underline font-medium"
+              className="text-blue-600 hover:text-blue-800 underline font-medium touch-target"
             >
               Sign up
             </Link>
