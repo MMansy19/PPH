@@ -134,20 +134,33 @@ export class FinancialService {
       const { data, error } = await this.supabase
         .from('financial_transactions')
         .insert(transactionData)
-        .select(`
-          *,
-          department:departments(*),
-          category:transaction_categories(*)
-        `)
+        .select('*')
         .single()
 
       if (error) {
         console.error('Database error:', error)
         throw new Error(`Database error: ${error.message} (Code: ${error.code})`)
       }
+
+      // After successful insert, fetch the complete record with joins separately
+      const { data: completeTransaction, error: fetchError } = await this.supabase
+        .from('financial_transactions')
+        .select(`
+          *,
+          department:departments(*),
+          category:transaction_categories(*)
+        `)
+        .eq('id', data.id)
+        .single()
+
+      if (fetchError) {
+        console.error('Error fetching complete transaction:', fetchError)
+        // Return basic data if join fetch fails
+        return data as FinancialTransaction
+      }
       
-      console.log('Transaction created successfully:', data)
-      return data as FinancialTransaction
+      console.log('Transaction created successfully:', completeTransaction)
+      return completeTransaction as FinancialTransaction
     } catch (error) {
       console.error('Error in createTransaction:', error)
       throw error
