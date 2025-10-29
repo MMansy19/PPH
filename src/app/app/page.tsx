@@ -78,7 +78,7 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Personal Process Hub
+              Portfolio Financial Hub
             </h1>
             <p className="text-gray-600 mt-1 text-sm md:text-base">
               {viewMode === 'portfolio' && '📊 Portfolio Bubble Chart'}

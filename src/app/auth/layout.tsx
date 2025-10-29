@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Authentication - PPH',
-    template: '%s - PPH'
+    default: 'Authentication - PFH',
+    template: '%s - PFH'
   },
-  description: 'Sign in or create an account for Personal Process Hub',
+  description: 'Sign in or create an account for Portfolio Financial Hub',
 }
 
 export default function AuthLayout({

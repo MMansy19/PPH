@@ -165,7 +165,7 @@ export function OTPVerificationForm({
         <CardContent className="text-center space-y-4">
           <div className="p-4 bg-green-50 border border-green-200 rounded-md">
             <p className="text-sm text-green-700">
-              You can now access all features of Personal Process Hub.
+              You can now access all features of Portfolio Financial Hub.
             </p>
           </div>
           <Link href="/">

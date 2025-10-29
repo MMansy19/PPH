@@ -9,10 +9,10 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'PPH - Personal Process Hub | Portfolio Management & Task Visualization',
-    template: '%s | PPH - Personal Process Hub'
+    default: 'PFH - Portfolio Financial Hub | Portfolio Management & Financial Tracking',
+    template: '%s | PFH - Portfolio Financial Hub'
   },
-  description: 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and data tables. Perfect for product managers, teams, and students. Export to PNG, PDF, and CSV.',
+  description: 'Portfolio Financial Hub (PFH) - Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and data tables. Track finances, manage tasks, and optimize your project portfolio. Export to PNG, PDF, and CSV.',
   keywords: [
     'portfolio management',
     'task management',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'MMansy19' }],
   creator: 'MMansy19',
-  publisher: 'PPH',
+  publisher: 'PFH',
   formatDetection: {
     email: false,
     address: false,
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PPH - Personal Process Hub',
+    title: 'PFH - Portfolio Financial Hub',
     description: 'Portfolio management with bubble charts, Kanban boards & process maps',
     images: ['/og-image.png'],
     creator: '@MMansy19', // Update with your Twitter handle

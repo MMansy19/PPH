@@ -58,9 +58,9 @@ export function Header() {
             </div>
             <div className="hidden xs:block">
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                PPH
+                PFH
               </h1>
-              <p className="text-xs text-gray-600 hidden sm:block">Process Hub</p>
+              <p className="text-xs text-gray-600 hidden sm:block">Financial Hub</p>
             </div>
           </Link>
 

@@ -28,12 +28,12 @@ export function Footer() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-bold">Personal Process Hub</h3>
+                <h3 className="text-lg sm:text-xl font-bold">Portfolio Financial Hub</h3>
                 <p className="text-xs sm:text-sm text-gray-400">Organize. Visualize. Execute.</p>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-md">
-              A powerful portfolio management tool to visualize, track, and optimize your projects with interactive charts, data tables, and process maps.
+              A powerful portfolio management and financial tracking tool to visualize, track, and optimize your projects with interactive charts, data tables, and comprehensive financial analytics.
             </p>
           </div>
 

@@ -135,7 +135,7 @@ export function RegisterForm() {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
         <CardDescription>
-          Join Personal Process Hub and start organizing your projects
+          Join Portfolio Financial Hub and start organizing your projects
         </CardDescription>
       </CardHeader>
       
