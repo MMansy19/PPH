@@ -79,36 +79,38 @@ export function WorkspaceSelector({ userId, currentWorkspaceId, onWorkspaceChang
   }
 
   if (loading) {
-    return <div className="h-10 w-64 bg-gray-200 animate-pulse rounded" />
+    return <div className="h-9 sm:h-10 w-48 sm:w-64 bg-gray-200 animate-pulse rounded" />
   }
 
   const currentWorkspace = workspaces.find(w => w.id === currentWorkspaceId)
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 w-full sm:w-auto">
       <Select value={currentWorkspaceId || undefined} onValueChange={onWorkspaceChange}>
-        <SelectTrigger className="w-64">
+        <SelectTrigger className="w-full sm:w-48 lg:w-64 touch-target">
           <SelectValue>
             {currentWorkspace && (
-              <span className="flex items-center gap-2">
-                <span>{currentWorkspace.icon}</span>
-                <span>{currentWorkspace.name}</span>
+              <span className="flex items-center gap-2 truncate">
+                <span className="text-base sm:text-sm">{currentWorkspace.icon}</span>
+                <span className="truncate text-sm sm:text-base">{currentWorkspace.name}</span>
               </span>
             )}
           </SelectValue>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="w-full sm:w-48 lg:w-64">
           {workspaces.map((workspace) => (
-            <SelectItem key={workspace.id} value={workspace.id}>
-              <div className="flex items-center gap-2">
-                <span>{workspace.icon}</span>
-                <span>{workspace.name}</span>
+            <SelectItem key={workspace.id} value={workspace.id} className="touch-target">
+              <div className="flex items-center gap-2 w-full">
+                <span className="text-base sm:text-sm">{workspace.icon}</span>
+                <span className="truncate text-sm sm:text-base">{workspace.name}</span>
               </div>
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-      <WorkspaceCreator userId={userId} onWorkspaceCreated={handleWorkspaceCreated} />
+      <div className="hidden sm:block">
+        <WorkspaceCreator userId={userId} onWorkspaceCreated={handleWorkspaceCreated} />
+      </div>
     </div>
   )
 }

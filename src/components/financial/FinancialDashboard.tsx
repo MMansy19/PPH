@@ -80,21 +80,22 @@ export default function FinancialDashboard() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <FinancialNavigation />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container-responsive py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 Financial Dashboard
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-gray-600 dark:text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">
                 Economic Input/Output Management System
               </p>
             </div>
             <Button 
               onClick={() => setShowTransactionForm(true)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto touch-target"
+              size="default"
             >
               <Plus className="h-4 w-4" />
               Add Transaction
@@ -103,46 +104,46 @@ export default function FinancialDashboard() {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <Card className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
                   Total Income
                 </p>
-                <p className="text-2xl font-bold text-green-600">
+                <p className="text-lg sm:text-2xl font-bold text-green-600">
                   ${summary.total_income.toLocaleString()}
                 </p>
               </div>
-              <div className="h-12 w-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-green-600" />
+              <div className="h-10 w-10 sm:h-12 sm:w-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
                   Total Expenses
                 </p>
-                <p className="text-2xl font-bold text-red-600">
+                <p className="text-lg sm:text-2xl font-bold text-red-600">
                   ${summary.total_expenses.toLocaleString()}
                 </p>
               </div>
-              <div className="h-12 w-12 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center">
-                <TrendingDown className="h-6 w-6 text-red-600" />
+              <div className="h-10 w-10 sm:h-12 sm:w-12 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center">
+                <TrendingDown className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
                   Net Amount
                 </p>
-                <p className={`text-2xl font-bold ${
+                <p className={`text-lg sm:text-2xl font-bold ${
                   summary.net_amount >= 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
                   ${summary.net_amount.toLocaleString()}

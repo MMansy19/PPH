@@ -109,25 +109,49 @@ export class FinancialService {
   }
 
   async createTransaction(transaction: CreateTransactionForm): Promise<FinancialTransaction> {
-    const { data: user } = await this.supabase.auth.getUser()
-    if (!user.user) throw new Error('User not authenticated')
+    try {
+      // Enhanced authentication check
+      const { data: user, error: authError } = await this.supabase.auth.getUser()
+      if (authError) {
+        console.error('Auth error:', authError)
+        throw new Error(`Authentication error: ${authError.message}`)
+      }
+      if (!user.user) {
+        throw new Error('User not authenticated - no user data')
+      }
 
-    const { data, error } = await this.supabase
-      .from('financial_transactions')
-      .insert({
+      console.log('Creating transaction for user:', user.user.id)
+      console.log('Transaction data:', transaction)
+
+      const transactionData = {
         ...transaction,
         user_id: user.user.id,
         created_by: user.user.id
-      })
-      .select(`
-        *,
-        department:departments(*),
-        category:transaction_categories(*)
-      `)
-      .single()
+      }
 
-    if (error) throw error
-    return data
+      console.log('Final transaction data:', transactionData)
+
+      const { data, error } = await this.supabase
+        .from('financial_transactions')
+        .insert(transactionData)
+        .select(`
+          *,
+          department:departments(*),
+          category:transaction_categories(*)
+        `)
+        .single()
+
+      if (error) {
+        console.error('Database error:', error)
+        throw new Error(`Database error: ${error.message} (Code: ${error.code})`)
+      }
+      
+      console.log('Transaction created successfully:', data)
+      return data as FinancialTransaction
+    } catch (error) {
+      console.error('Error in createTransaction:', error)
+      throw error
+    }
   }
 
   async updateTransaction(id: string, updates: Partial<CreateTransactionForm>): Promise<FinancialTransaction> {
@@ -161,19 +185,35 @@ export class FinancialService {
 
   async getDepartments(): Promise<Department[]> {
     try {
+      console.log('Fetching departments...')
+      const { data: user, error: authError } = await this.supabase.auth.getUser()
+      if (authError) {
+        console.error('Auth error in getDepartments:', authError)
+        throw new Error(`Authentication error: ${authError.message}`)
+      }
+      if (!user.user) {
+        throw new Error('User not authenticated')
+      }
+
+      console.log('User authenticated, fetching departments for user:', user.user.id)
+
       const { data, error } = await this.supabase
         .from('departments')
         .select('*')
         .order('name')
 
       if (error) {
-        console.error('Error fetching departments:', error)
-        return []
+        console.error('Database error fetching departments:', error)
+        console.error('Error code:', error.code)
+        console.error('Error details:', error.details)
+        throw new Error(`Failed to fetch departments: ${error.message} (Code: ${error.code})`)
       }
+      
+      console.log('Departments fetched successfully:', data?.length || 0, 'records')
       return data || []
     } catch (error) {
       console.error('Error in getDepartments:', error)
-      return []
+      throw error
     }
   }
 
@@ -223,19 +263,35 @@ export class FinancialService {
 
   async getCategories(): Promise<TransactionCategory[]> {
     try {
+      console.log('Fetching transaction categories...')
+      const { data: user, error: authError } = await this.supabase.auth.getUser()
+      if (authError) {
+        console.error('Auth error in getCategories:', authError)
+        throw new Error(`Authentication error: ${authError.message}`)
+      }
+      if (!user.user) {
+        throw new Error('User not authenticated')
+      }
+
+      console.log('User authenticated, fetching categories for user:', user.user.id)
+
       const { data, error } = await this.supabase
         .from('transaction_categories')
         .select('*')
         .order('name')
 
       if (error) {
-        console.error('Error fetching categories:', error)
-        return []
+        console.error('Database error fetching categories:', error)
+        console.error('Error code:', error.code)
+        console.error('Error details:', error.details)
+        throw new Error(`Failed to fetch categories: ${error.message} (Code: ${error.code})`)
       }
+      
+      console.log('Categories fetched successfully:', data?.length || 0, 'records')
       return data || []
     } catch (error) {
       console.error('Error in getCategories:', error)
-      return []
+      throw error
     }
   }
 
@@ -286,7 +342,7 @@ export class FinancialService {
 
     if (error) {
       console.error('Error fetching financial summary:', error)
-      throw error
+      return { total_income: 0, total_expenses: 0, net_amount: 0, transaction_count: 0 }
     }
 
     const summary = (data || []).reduce(
