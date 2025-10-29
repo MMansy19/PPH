@@ -74,7 +74,7 @@ export function Header() {
                 <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target">
                   Dashboard
                 </Link>
-                <Link href="/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target whitespace-nowrap">
+                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target whitespace-nowrap">
                   Financial
                 </Link>
               </>
@@ -167,7 +167,7 @@ export function Header() {
                     Dashboard
                   </Link>
                   <Link 
-                    href="/financial" 
+                    href="/app/financial" 
                     className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
