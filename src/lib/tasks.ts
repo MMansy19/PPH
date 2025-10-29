@@ -24,7 +24,11 @@ export class TasksService {
         priority: task.priority?.toLowerCase() as 'high' | 'medium' | 'low',
         duration: task.duration || '1h',
         entity_type: task.entity_type || 'task' as const,
-        completed: task.completed || false
+        completed: task.completed || false,
+        // Convert empty strings to null for date fields
+        start_date: task.start_date || null,
+        end_date: task.end_date || null,
+        due_date: task.due_date || null
       }
 
       console.log('Task data to insert:', taskData)
@@ -65,6 +69,16 @@ export class TasksService {
       }
       if (updates.priority) {
         updateData.priority = updates.priority.toLowerCase()
+      }
+      // Convert empty strings to null for date fields
+      if ('start_date' in updates) {
+        updateData.start_date = updates.start_date || null
+      }
+      if ('end_date' in updates) {
+        updateData.end_date = updates.end_date || null
+      }
+      if ('due_date' in updates) {
+        updateData.due_date = updates.due_date || null
       }
 
       const { data, error } = await this.supabase

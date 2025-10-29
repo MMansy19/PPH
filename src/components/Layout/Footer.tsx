@@ -8,7 +8,7 @@ export function Footer() {
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-auto safe-area-bottom">
-      <div className="container-responsive py-8 sm:py-12">
+      <div className="container-responsive py-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Brand Section */}
           <div className="col-span-1 sm:col-span-2">
@@ -35,24 +35,24 @@ export function Footer() {
           {/* Product Links */}
           <div>
             <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Product</h4>
-            <ul className="space-y-2">
+            <ul className="space-y-0">
               <li>
-                <Link href="/" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                <Link href="/" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/app" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                <Link href="/app" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block">
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/app/financial" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                <Link href="/app/financial" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block">
                   Financial Analytics
                 </Link>
               </li>
               <li>
-                <Link href="/app/settings" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                <Link href="/app/settings" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block">
                   Settings
                 </Link>
               </li>
@@ -62,13 +62,13 @@ export function Footer() {
           {/* Resources Links */}
           <div>
             <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Resources</h4>
-            <ul className="space-y-2">
+            <ul className="space-y-0">
               <li>
                 <a 
                   href="https://mahmoud-mansy.vercel.app/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target"
                 >
                   Documentation <ExternalLink className="h-3 w-3" />
                 </a>
@@ -78,7 +78,7 @@ export function Footer() {
                   href="https://github.com/MMansy19/PPH" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target"
                 >
                   GitHub Repository <ExternalLink className="h-3 w-3" />
                 </a>
@@ -88,7 +88,7 @@ export function Footer() {
                   href="https://github.com/MMansy19/PPH#readme" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target"
                 >
                   Getting Started <ExternalLink className="h-3 w-3" />
                 </a>
@@ -98,7 +98,7 @@ export function Footer() {
                   href="https://github.com/MMansy19/PPH/issues" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target"
                 >
                   Support <ExternalLink className="h-3 w-3" />
                 </a>
@@ -114,7 +114,7 @@ export function Footer() {
                 href="https://mahmoud-mansy.vercel.app/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group touch-target py-1"
+                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group touch-target"
               >
                 <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white text-sm">
                   MM
@@ -160,7 +160,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-700 mt-6 sm:mt-8 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+        <div className="border-t border-gray-700 mt-4 sm:mt-6 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
           <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
             © {currentYear} Personal Process Hub. All rights reserved.
           </p>

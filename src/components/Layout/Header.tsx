@@ -60,15 +60,15 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 my-2 ">
-            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5">
+            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6">
               Home
             </Link>
             {user && (
               <>
-                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5 whitespace-nowrap">
+                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6 whitespace-nowrap">
                   Dashboard
                 </Link>
-                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5 whitespace-nowrap">
+                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6 whitespace-nowrap">
                   Financial
                 </Link>
               </>
@@ -77,7 +77,7 @@ export function Header() {
               href="https://mahmoud-mansy.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-5"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6"
             >
               About
             </a>
@@ -180,7 +180,7 @@ export function Header() {
               
               {/* Mobile Auth Section */}
               {loading ? (
-                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-5" />
+                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-6" />
               ) : user ? (
                 <div className="flex flex-col gap-4 pt-4 border-t border-gray-100">
                   <div className="flex items-center gap-3 px-2 py-2">
