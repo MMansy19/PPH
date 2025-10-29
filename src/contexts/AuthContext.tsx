@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Handle successful sign in - redirect to dashboard
         if (event === 'SIGNED_IN') {
-          window.location.href = '/'
+          window.location.href = '/app'
         }
       }
     )

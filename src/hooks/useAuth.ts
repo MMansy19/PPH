@@ -23,7 +23,7 @@ export function useRequireAuth(redirectTo = '/auth/login') {
 /**
  * Hook to redirect authenticated users (for login/register pages)
  */
-export function useRedirectIfAuthenticated(redirectTo = '/') {
+export function useRedirectIfAuthenticated(redirectTo = '/app') {
   const { user, loading } = useAuth()
   const router = useRouter()
 

@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   const authRoutes = ['/auth/login', '/auth/register', '/auth/forgot-password']
   
   // Define protected routes that require authentication
-  const protectedRoutes = ['/dashboard', '/profile', '/settings']
+  const protectedRoutes = ['/app', '/dashboard', '/profile', '/settings']
   
   // Define public routes that don't require authentication
   const publicRoutes = ['/', '/auth', '/about', '/contact']

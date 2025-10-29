@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ModeSwitcher } from '@/components/Dashboard/ModeSwitcher'
 import { ExportButtons } from '@/components/Dashboard/ExportButtons'
@@ -16,7 +16,8 @@ import { Button } from '@/components/ui/button'
 import { useTasksStore } from '@/store/useTasksStore'
 import { useTasks } from '@/hooks/useTasks'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { getCurrentUser, signOut, supabase } from '@/lib/auth'
+import { useRequireAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/contexts/AuthContext'
 import { LogOut, Plus } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { TaskForm } from '@/components/forms/TaskForm'
@@ -27,23 +28,10 @@ export default function DashboardPage() {
   const { loading: tasksLoading } = useTasks()
   const isMobile = useMediaQuery('(max-width: 768px)')
   
-  const [user, setUser] = useState<any>(null)
-  const [authLoading, setAuthLoading] = useState(true)
+  // Use the proper auth hooks
+  const { user, loading: authLoading } = useRequireAuth('/auth/login')
+  const { signOut } = useAuth()
   const [taskDialogOpen, setTaskDialogOpen] = useState(false)
-
-  useEffect(() => {
-    checkAuth()
-  }, [])
-
-  const checkAuth = async () => {
-    const currentUser = await getCurrentUser()
-    if (!currentUser) {
-      router.push('/auth/login')
-    } else {
-      setUser(currentUser)
-      setAuthLoading(false)
-    }
-  }
 
   const handleSignOut = async () => {
     await signOut()
