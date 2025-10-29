@@ -70,9 +70,14 @@ export function Header() {
               Home
             </Link>
             {user && (
-              <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                Dashboard
-              </Link>
+              <>
+                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                  Dashboard
+                </Link>
+                <Link href="/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                  Financial Management
+                </Link>
+              </>
             )}
             <a 
               href="https://mahmoud-mansy.vercel.app/" 
@@ -152,13 +157,22 @@ export function Header() {
                 Home
               </Link>
               {user && (
-                <Link 
-                  href="/app" 
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
+                <>
+                  <Link 
+                    href="/app" 
+                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    href="/financial" 
+                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Financial Management
+                  </Link>
+                </>
               )}
               <a 
                 href="https://mahmoud-mansy.vercel.app/" 
