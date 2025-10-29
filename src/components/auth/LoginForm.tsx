@@ -65,11 +65,11 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
+    <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
       <CardHeader className="text-center space-y-2 px-4 sm:px-6 pt-6 sm:pt-8">
-        <CardTitle className="text-xl sm:text-2xl font-bold">Welcome Back</CardTitle>
+        <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Welcome Back</CardTitle>
         <CardDescription className="text-sm sm:text-base">
-          Sign in to your Portfolio Financial Hub account
+          Sign in to your account
         </CardDescription>
       </CardHeader>
       

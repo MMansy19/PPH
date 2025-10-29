@@ -119,9 +119,9 @@ export function ResetPasswordForm({ accessToken, refreshToken }: ResetPasswordFo
 
   if (success) {
     return (
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-green-600">Password Updated!</CardTitle>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Password Updated!</CardTitle>
           <CardDescription>
             Your password has been successfully updated
           </CardDescription>
@@ -143,9 +143,9 @@ export function ResetPasswordForm({ accessToken, refreshToken }: ResetPasswordFo
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Reset Password</CardTitle>
+        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Reset Password</CardTitle>
         <CardDescription>
           Enter your new password below
         </CardDescription>

@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-auto safe-area-bottom">
       <div className="container-responsive py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Brand Section */}
           <div className="col-span-1 sm:col-span-2">
             <div className="flex items-center gap-2 mb-4">
@@ -32,9 +32,9 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Product Links */}
           <div>
-            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Quick Links</h4>
+            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Product</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
@@ -47,6 +47,23 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/app/financial" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                  Financial Analytics
+                </Link>
+              </li>
+              <li>
+                <Link href="/app/settings" className="text-gray-400 hover:text-white transition-colors text-sm touch-target block py-1">
+                  Settings
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources Links */}
+          <div>
+            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Resources</h4>
+            <ul className="space-y-2">
+              <li>
                 <a 
                   href="https://mahmoud-mansy.vercel.app/" 
                   target="_blank" 
@@ -54,6 +71,36 @@ export function Footer() {
                   className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
                 >
                   Documentation <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://github.com/MMansy19/PPH" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                >
+                  GitHub Repository <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://github.com/MMansy19/PPH#readme" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                >
+                  Getting Started <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://github.com/MMansy19/PPH/issues" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1 touch-target py-1"
+                >
+                  Support <ExternalLink className="h-3 w-3" />
                 </a>
               </li>
             </ul>
@@ -117,6 +164,30 @@ export function Footer() {
           <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
             © {currentYear} Personal Process Hub. All rights reserved.
           </p>
+          <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6 text-xs sm:text-sm">
+            <a 
+              href="https://github.com/MMansy19/PPH/blob/main/LICENSE" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors touch-target"
+            >
+              Privacy Policy
+            </a>
+            <a 
+              href="https://github.com/MMansy19/PPH/blob/main/LICENSE" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors touch-target"
+            >
+              Terms of Service
+            </a>
+            <a 
+              href="mailto:mahmoud2abdalfattah@gmail.com" 
+              className="text-gray-400 hover:text-white transition-colors touch-target"
+            >
+              Contact
+            </a>
+          </div>
         </div>
       </div>
     </footer>

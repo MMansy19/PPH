@@ -28,7 +28,7 @@ export default function VerifyPage() {
 
   if (!email) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <LoadingSpinner />
       </div>
     )
@@ -51,21 +51,13 @@ export default function VerifyPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="w-full">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">PFHub</h1>
-          <p className="text-gray-600">Portfolio Financial Hub</p>
-        </div>
-        <OTPVerificationForm 
-          email={email}
-          type={['sms', 'phone_change'].includes(type) ? 'signup' : type as 'signup' | 'email_change' | 'recovery'}
-          title={getTitle()}
-          description={getDescription()}
-          onSuccess={() => router.push('/')}
-          onBack={() => router.back()}
-        />
-      </div>
-    </div>
+    <OTPVerificationForm 
+      email={email}
+      type={['sms', 'phone_change'].includes(type) ? 'signup' : type as 'signup' | 'email_change' | 'recovery'}
+      title={getTitle()}
+      description={getDescription()}
+      onSuccess={() => router.push('/')}
+      onBack={() => router.back()}
+    />
   )
 }

@@ -58,12 +58,12 @@ export function ForgotPasswordForm() {
 
   if (success) {
     return (
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
             <Mail className="h-6 w-6 text-blue-600" />
           </div>
-          <CardTitle className="text-2xl font-bold text-blue-600">Check Your Email</CardTitle>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Check Your Email</CardTitle>
           <CardDescription>
             Reset link sent to your email
           </CardDescription>
@@ -103,9 +103,9 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Forgot Password?</CardTitle>
+        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Forgot Password?</CardTitle>
         <CardDescription>
           No worries! Enter your email and we'll send you a reset link
         </CardDescription>

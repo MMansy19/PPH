@@ -155,9 +155,9 @@ export function OTPVerificationForm({
 
   if (success) {
     return (
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-green-600">Email Verified!</CardTitle>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Email Verified!</CardTitle>
           <CardDescription>
             Your email has been successfully verified
           </CardDescription>
@@ -179,9 +179,9 @@ export function OTPVerificationForm({
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto shadow-2xl backdrop-blur-sm bg-white/95 border-white/20">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{title}</CardTitle>
         <CardDescription>
           {description}
         </CardDescription>
