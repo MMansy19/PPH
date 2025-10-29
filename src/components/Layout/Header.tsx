@@ -33,16 +33,16 @@ export function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-safari border-b border-gray-200 safe-area-top">
+      <div className="container-responsive">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo and Name */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group touch-target">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur-sm group-hover:blur-md transition-all"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-2">
+              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-1.5 sm:p-2">
                 <svg 
-                  className="w-6 h-6 text-white" 
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -56,26 +56,26 @@ export function Header() {
                 </svg>
               </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div className="hidden xs:block">
+              <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 PPH
               </h1>
-              <p className="text-xs text-gray-600">Process Hub</p>
+              <p className="text-xs text-gray-600 hidden sm:block">Process Hub</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
+            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target">
               Home
             </Link>
             {user && (
               <>
-                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target">
                   Dashboard
                 </Link>
-                <Link href="/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                  Financial Management
+                <Link href="/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target whitespace-nowrap">
+                  Financial
                 </Link>
               </>
             )}
@@ -83,7 +83,7 @@ export function Header() {
               href="https://mahmoud-mansy.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target"
             >
               About
             </a>
@@ -94,12 +94,12 @@ export function Header() {
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 h-8 px-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                  <Button variant="ghost" className="flex items-center gap-2 h-auto px-2 py-1.5 touch-target">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-xs sm:text-sm font-medium">
                       {getUserInitials()}
                     </div>
-                    <span className="text-sm font-medium">{getUserDisplayName()}</span>
-                    <ChevronDown className="h-4 w-4" />
+                    <span className="text-sm font-medium hidden xl:inline-block max-w-24 truncate">{getUserDisplayName()}</span>
+                    <ChevronDown className="h-4 w-4 hidden xl:block" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -125,11 +125,11 @@ export function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center gap-3">
-                <Button variant="ghost" size="sm" asChild>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Button variant="ghost" size="sm" asChild className="touch-target">
                   <Link href="/auth/login">Sign In</Link>
                 </Button>
-                <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" asChild>
+                <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 touch-target whitespace-nowrap" asChild>
                   <Link href="/auth/register">Get Started</Link>
                 </Button>
               </div>
@@ -138,20 +138,21 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg touch-target transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="lg:hidden py-4 border-t border-gray-200 bg-white/95 backdrop-blur-safari">
             <nav className="flex flex-col gap-4">
               <Link 
                 href="/" 
-                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
@@ -160,14 +161,14 @@ export function Header() {
                 <>
                   <Link 
                     href="/app" 
-                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                    className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <Link 
                     href="/financial" 
-                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                    className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Financial Management
@@ -178,57 +179,57 @@ export function Header() {
                 href="https://mahmoud-mansy.vercel.app/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
               >
                 About
               </a>
               
               {/* Mobile Auth Section */}
               {loading ? (
-                <div className="w-full h-10 rounded bg-gray-200 animate-pulse" />
+                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-4" />
               ) : user ? (
-                <div className="flex flex-col gap-3 pt-2 border-t border-gray-100">
-                  <div className="flex items-center gap-3 px-2">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                <div className="flex flex-col gap-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center gap-3 px-2 py-2">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-base font-medium">
                       {getUserInitials()}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{getUserDisplayName()}</p>
-                      <p className="text-xs text-gray-600">{user.email}</p>
+                      <p className="text-base font-medium text-gray-900">{getUserDisplayName()}</p>
+                      <p className="text-sm text-gray-600 truncate max-w-48">{user.email}</p>
                     </div>
                   </div>
                   <Link 
                     href="/profile" 
-                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-2"
+                    className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-3 touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <User className="h-4 w-4" />
+                    <User className="h-5 w-5" />
                     Profile
                   </Link>
                   <Link 
                     href="/settings" 
-                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-2"
+                    className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-3 touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Settings className="h-4 w-4" />
+                    <Settings className="h-5 w-5" />
                     Settings
                   </Link>
                   <Button 
                     variant="outline" 
-                    size="sm" 
+                    size="default" 
                     onClick={handleSignOut}
-                    className="justify-start text-red-600 border-red-200 hover:bg-red-50"
+                    className="justify-start text-red-600 border-red-200 hover:bg-red-50 touch-target mt-2"
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
+                    <LogOut className="h-5 w-5 mr-3" />
                     Sign Out
                   </Button>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3 pt-2 border-t border-gray-100">
-                  <Button variant="outline" size="sm" asChild>
+                <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
+                  <Button variant="outline" size="default" asChild className="touch-target">
                     <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
                   </Button>
-                  <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600" asChild>
+                  <Button size="default" className="bg-gradient-to-r from-blue-600 to-purple-600 touch-target" asChild>
                     <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
                   </Button>
                 </div>
