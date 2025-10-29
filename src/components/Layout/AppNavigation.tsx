@@ -27,12 +27,6 @@ const navigationItems = [
     description: 'Portfolio overview and main dashboard'
   },
   {
-    name: 'Portfolio Chart',
-    href: '/app/portfolio',
-    icon: PieChart,
-    description: 'Interactive bubble chart visualization'
-  },
-  {
     name: 'Financial',
     href: '/app/financial',
     icon: DollarSign,
@@ -115,7 +109,7 @@ export function AppNavigation({ className }: AppNavigationProps) {
         )}
       </button>
 
-      <div className="h-full px-3 py-4 overflow-y-auto">
+      <div className="h-full px-3 py-8 overflow-y-auto w-full">
         <div className="space-y-6">
           {/* Main Navigation */}
           <div>

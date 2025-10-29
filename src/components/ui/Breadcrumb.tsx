@@ -61,7 +61,7 @@ export function Breadcrumb({ className }: { className?: string }) {
           {item.href ? (
             <Link
               href={item.href}
-              className="hover:text-gray-700 transition-colors touch-target px-1 py-1"
+              className="hover:text-gray-700 transition-colors touch-target px-1 pt-3"
             >
               {item.label}
             </Link>
