@@ -1,24 +1,7 @@
 import { createClient } from '@/lib/supabase'
+import { Task as TaskType } from '@/types'
 
-export interface Task {
-  id?: string
-  workspace_id: string
-  title: string
-  description?: string
-  priority: 'high' | 'medium' | 'low'
-  category: 'big_bets' | 'line_extensions' | 'ltos' | 'other'
-  value: number // 1-10 scale, will be converted for database
-  risk: number // 1-10 scale, will be converted for database
-  status: string
-  npv?: number
-  due_date?: string
-  start_date?: string
-  tags?: string[]
-  assignee?: string
-  completed?: boolean
-  created_at?: string
-  updated_at?: string
-}
+export type Task = TaskType
 
 export class TasksService {
   private supabase = createClient()
@@ -36,9 +19,12 @@ export class TasksService {
       // Convert percentage values to 1-10 scale for database
       const taskData = {
         ...task,
-        value: Math.max(1, Math.min(10, Math.round(task.value / 10))),
-        risk: Math.max(1, Math.min(10, Math.round(task.risk / 10))),
-        priority: task.priority.toLowerCase()
+        value: task.value ? Math.max(1, Math.min(10, Math.round(task.value / 10))) : 5,
+        risk: task.risk ? Math.max(1, Math.min(10, Math.round(task.risk / 10))) : 5,
+        priority: task.priority?.toLowerCase() as 'high' | 'medium' | 'low',
+        duration: task.duration || '1h',
+        entity_type: task.entity_type || 'task' as const,
+        completed: task.completed || false
       }
 
       console.log('Task data to insert:', taskData)
@@ -53,6 +39,11 @@ export class TasksService {
         console.error('Supabase error:', error)
       } else {
         console.log('Task created successfully:', data)
+        // Convert database values back to percentage scale for UI
+        if (data) {
+          data.value = data.value * 10
+          data.risk = data.risk * 10
+        }
       }
 
       return { data, error }
@@ -82,6 +73,12 @@ export class TasksService {
         .eq('id', id)
         .select()
         .single()
+
+      // Convert database values back to percentage scale for UI
+      if (data) {
+        data.value = data.value * 10
+        data.risk = data.risk * 10
+      }
 
       return { data, error }
     } catch (error) {
@@ -115,8 +112,12 @@ export class TasksService {
       // Convert database values back to percentage scale for UI
       const tasksWithPercentages = data?.map(task => ({
         ...task,
-        value: task.value * 10,
-        risk: task.risk * 10
+        value: task.value ? task.value * 10 : 50,
+        risk: task.risk ? task.risk * 10 : 50,
+        status: task.status as 'todo' | 'in-progress' | 'done',
+        priority: task.priority as 'high' | 'medium' | 'low',
+        entity_type: task.entity_type as 'task' | 'event' | 'activity' | 'process',
+        category: task.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'
       }))
 
       return { data: tasksWithPercentages || [], error }
@@ -136,8 +137,12 @@ export class TasksService {
 
       // Convert database values back to percentage scale for UI
       if (data) {
-        data.value = data.value * 10
-        data.risk = data.risk * 10
+        data.value = data.value ? data.value * 10 : 50
+        data.risk = data.risk ? data.risk * 10 : 50
+        data.status = data.status as 'todo' | 'in-progress' | 'done'
+        data.priority = data.priority as 'high' | 'medium' | 'low'
+        data.entity_type = data.entity_type as 'task' | 'event' | 'activity' | 'process'
+        data.category = data.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'
       }
 
       return { data, error }
