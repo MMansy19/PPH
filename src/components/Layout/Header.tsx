@@ -100,13 +100,13 @@ export function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/profile" className="flex items-center gap-2 cursor-pointer">
+                    <Link href="/app/profile" className="flex items-center gap-2 cursor-pointer">
                       <User className="h-4 w-4" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/settings" className="flex items-center gap-2 cursor-pointer">
+                    <Link href="/app/settings" className="flex items-center gap-2 cursor-pointer">
                       <Settings className="h-4 w-4" />
                       Settings
                     </Link>
@@ -193,7 +193,7 @@ export function Header() {
                     </div>
                   </div>
                   <Link 
-                    href="/profile" 
+                    href="/app/profile" 
                     className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-3 touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -201,7 +201,7 @@ export function Header() {
                     Profile
                   </Link>
                   <Link 
-                    href="/settings" 
+                    href="/app/settings" 
                     className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-3 touch-target py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >

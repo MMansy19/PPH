@@ -144,3 +144,146 @@
     break-inside: avoid;
   }
 }
+
+/* React Big Calendar Custom Styles */
+.rbc-calendar {
+  @apply bg-white rounded-lg shadow-sm;
+}
+
+.rbc-header {
+  @apply py-3 px-2 font-semibold text-gray-700 bg-gray-50 border-b border-gray-200;
+}
+
+.rbc-today {
+  @apply bg-blue-50;
+}
+
+.rbc-off-range-bg {
+  @apply bg-gray-50;
+}
+
+.rbc-date-cell {
+  @apply text-gray-600;
+}
+
+.rbc-current {
+  @apply font-bold text-blue-600;
+}
+
+.rbc-event {
+  @apply rounded shadow-sm;
+}
+
+.rbc-event:hover {
+  @apply opacity-100 shadow-md;
+}
+
+.rbc-event-label {
+  @apply text-xs font-medium;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  @apply border-t border-gray-100;
+}
+
+.rbc-time-header-content {
+  @apply border-l border-gray-200;
+}
+
+.rbc-timeslot-group {
+  @apply border-l border-gray-200;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  @apply border-l border-gray-200;
+}
+
+.rbc-month-row + .rbc-month-row {
+  @apply border-t border-gray-200;
+}
+
+.rbc-header + .rbc-header {
+  @apply border-l border-gray-200;
+}
+
+.rbc-toolbar {
+  @apply mb-4 flex flex-wrap gap-2 items-center justify-between;
+}
+
+.rbc-toolbar button {
+  @apply px-3 py-1.5 text-sm font-medium rounded border border-gray-300 hover:bg-gray-100 transition-colors;
+}
+
+.rbc-toolbar button.rbc-active {
+  @apply bg-blue-600 text-white border-blue-600 hover:bg-blue-700;
+}
+
+.rbc-show-more {
+  @apply text-xs text-blue-600 hover:text-blue-800 font-medium;
+}
+
+/* Dark mode support for calendar */
+.dark .rbc-calendar {
+  @apply bg-gray-900;
+}
+
+.dark .rbc-header {
+  @apply bg-gray-800 text-gray-200 border-gray-700;
+}
+
+.dark .rbc-today {
+  @apply bg-blue-900/30;
+}
+
+.dark .rbc-off-range-bg {
+  @apply bg-gray-800/50;
+}
+
+.dark .rbc-date-cell {
+  @apply text-gray-400;
+}
+
+.dark .rbc-current {
+  @apply text-blue-400;
+}
+
+.dark .rbc-day-bg + .rbc-day-bg,
+.dark .rbc-month-row + .rbc-month-row,
+.dark .rbc-header + .rbc-header,
+.dark .rbc-time-header-content,
+.dark .rbc-timeslot-group,
+.dark .rbc-day-slot .rbc-time-slot {
+  @apply border-gray-700;
+}
+
+.dark .rbc-toolbar button {
+  @apply border-gray-600 hover:bg-gray-800 text-gray-200;
+}
+
+.dark .rbc-toolbar button.rbc-active {
+  @apply bg-blue-700 border-blue-700 hover:bg-blue-800 text-white;
+}
+
+.dark .rbc-show-more {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Responsive calendar adjustments */
+@media (max-width: 768px) {
+  .rbc-calendar {
+    @apply text-sm;
+  }
+  
+  .rbc-header {
+    @apply py-2 px-1 text-xs;
+  }
+  
+  .rbc-toolbar button {
+    @apply px-2 py-1 text-xs;
+  }
+  
+  .rbc-event {
+    @apply text-xs;
+  }
+}
+
