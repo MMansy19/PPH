@@ -26,9 +26,12 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
     category: task?.category || 'big_bets' as const,
     value: task?.value || 50,
     risk: task?.risk || 50,
+    npv: task?.npv || 0,
     status: task?.status || 'todo' as const,
-    duration: task?.duration || '1h',
-    entity_type: task?.entity_type || 'task' as const
+    duration: task?.duration || '1w',
+    entity_type: task?.entity_type || 'task' as const,
+    start_date: task?.start_date || new Date().toISOString().split('T')[0],
+    end_date: task?.end_date || '',
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -146,6 +149,70 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
         </div>
       </div>
 
+      {/* Entity Type and Duration Row */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="entity_type">Entity Type</Label>
+          <Select value={formData.entity_type} onValueChange={(value) => handleInputChange('entity_type', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="task">Task</SelectItem>
+              <SelectItem value="event">Event</SelectItem>
+              <SelectItem value="activity">Activity</SelectItem>
+              <SelectItem value="process">Process</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="duration">Duration (e.g., 12w, 3d, 4h)</Label>
+          <Input
+            id="duration"
+            value={formData.duration}
+            onChange={(e) => handleInputChange('duration', e.target.value)}
+            placeholder="e.g., 12w, 3d, 4h"
+          />
+        </div>
+      </div>
+
+      {/* Start Date and End Date Row */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="start_date">Start Date</Label>
+          <Input
+            id="start_date"
+            type="date"
+            value={formData.start_date}
+            onChange={(e) => handleInputChange('start_date', e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="end_date">End Date (Optional)</Label>
+          <Input
+            id="end_date"
+            type="date"
+            value={formData.end_date}
+            onChange={(e) => handleInputChange('end_date', e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* NPV */}
+      <div className="space-y-2">
+        <Label htmlFor="npv">NPV (Net Present Value in Millions)</Label>
+        <Input
+          id="npv"
+          type="number"
+          step="0.1"
+          value={formData.npv}
+          onChange={(e) => handleInputChange('npv', parseFloat(e.target.value) || 0)}
+          placeholder="Enter NPV in millions..."
+        />
+      </div>
+
       {/* Value and Risk Sliders */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
@@ -184,8 +251,7 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="todo">To Do</SelectItem>
-            <SelectItem value="in_progress">In Progress</SelectItem>
-            <SelectItem value="review">Review</SelectItem>
+            <SelectItem value="in-progress">In Progress</SelectItem>
             <SelectItem value="done">Done</SelectItem>
           </SelectContent>
         </Select>
