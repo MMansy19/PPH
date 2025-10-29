@@ -2,7 +2,7 @@
 import { Calendar as BigCalendar, momentLocalizer, Event } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useTasks } from '@/hooks/useTasks';
+import { useTasksStore } from '@/store/useTasksStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { getCategoryColor } from '@/utils/dates';
 import { parseDuration } from '@/lib/utils';
@@ -15,9 +15,12 @@ interface CalendarEvent extends Event {
 }
 
 export function CalendarView() {
-  const { tasks } = useTasks();
+  const { tasks, currentWorkspaceId } = useTasksStore();
+  
+  // Filter tasks by current workspace
+  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId);
 
-  const events: CalendarEvent[] = tasks.map((task) => {
+  const events: CalendarEvent[] = workspaceTasks.map((task) => {
     const startDate = task.start_date 
       ? new Date(task.start_date) 
       : task.created_at 

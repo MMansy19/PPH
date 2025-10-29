@@ -5,10 +5,13 @@ import { useTasksStore } from '@/store/useTasksStore'
 import { CATEGORY_COLORS } from '@/lib/utils'
 
 export function useReactFlowData() {
-  const { tasks } = useTasksStore()
+  const { tasks, currentWorkspaceId } = useTasksStore()
+  
+  // Filter tasks by current workspace
+  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
   
   const initialNodes: Node[] = useMemo(() => {
-    return tasks.map((task, idx) => ({
+    return workspaceTasks.map((task, idx) => ({
       id: task.id,
       type: 'default',
       data: { 
@@ -28,7 +31,7 @@ export function useReactFlowData() {
         boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
       },
     }))
-  }, [tasks])
+  }, [workspaceTasks])
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
