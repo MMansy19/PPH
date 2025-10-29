@@ -1,8 +1,8 @@
 {
-  "name": "pph",
+  "name": "pfh",
   "version": "0.1.0",
   "private": true,
-  "description": "Personal Process Hub (PPH)",
+  "description": "Portfolio Financial Hub (PFH)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
