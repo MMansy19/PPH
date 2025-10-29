@@ -43,7 +43,7 @@ export function Header() {
               <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
               <Image
                 src="/logo.png"
-                alt="PFH Logo"
+                alt="PFHub Logo"
                 width={48}
                 height={48}
                 className="w-full h-full object-contain rounded-lg"
@@ -52,7 +52,7 @@ export function Header() {
             </div>
             <div className="block">
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              PFH
+              PFHub
               </h1>
               <p className="text-xs text-gray-600 hidden sm:block mb-1">Financial Hub</p>
             </div>

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Authentication - PFH',
-    template: '%s - PFH'
+    default: 'Authentication - PFHub',
+    template: '%s - PFHub'
   },
   description: 'Sign in or create an account for Portfolio Financial Hub',
 }

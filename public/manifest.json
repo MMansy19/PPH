@@ -1,7 +1,7 @@
 {
   "name": "Portfolio Financial Hub",
-  "short_name": "PFH",
-  "description": "Portfolio management with bubble charts, Kanban boards, and process maps",
+  "short_name": "PFHub",
+  "description": "Portfolio management with bubble charts, Kanban boards, process maps, and financial tracking",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

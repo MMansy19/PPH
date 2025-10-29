@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Portfolio Financial Hub | PFH',
-  description: 'Portfolio Financial Hub (PFH) - Economic Input/Output Management System. Track income, expenses, budgets, and financial performance with comprehensive reporting and analytics. Manage departments, categories, and transactions efficiently.',
+  title: 'Portfolio Financial Hub | PFHub',
+  description: 'Portfolio Financial Hub (PFHub) - Economic Input/Output Management System. Track income, expenses, budgets, and financial performance with comprehensive reporting and analytics. Manage departments, categories, and transactions efficiently.',
   keywords: [
     'portfolio financial hub',
-    'PFH',
+    'PFHub',
     'financial management',
     'expense tracking',
     'income tracking',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'MMansy19' }],
   openGraph: {
-    title: 'Portfolio Financial Hub - PFH',
+    title: 'Portfolio Financial Hub - PFHub',
     description: 'Track income, expenses, and budgets with comprehensive reporting and analytics',
     url: 'https://pph.vercel.app/app/financial',
     siteName: 'Portfolio Financial Hub',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'PFH - Portfolio Financial Hub Dashboard - Track Income, Expenses & Budgets',
+        alt: 'PFHub - Portfolio Financial Hub Dashboard - Track Income, Expenses & Budgets',
       },
     ],
     locale: 'en_US',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Portfolio Financial Hub - PFH',
+    title: 'Portfolio Financial Hub - PFHub',
     description: 'Economic I/O Management System - Track income, expenses & financial performance',
     images: ['/logo.png'],
     creator: '@MMansy19',
@@ -74,7 +74,7 @@ export default function FinancialLayout({
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Portfolio Financial Hub (PFH)',
+    name: 'Portfolio Financial Hub (PFHub)',
     applicationCategory: 'BusinessApplication',
     description: 'Economic Input/Output Management System for tracking income, expenses, and financial performance',
     operatingSystem: 'Web',

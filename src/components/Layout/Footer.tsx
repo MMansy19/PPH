@@ -16,7 +16,7 @@ export function Footer() {
               <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
                 <Image 
                   src="/logo.png" 
-                  alt="PFH Logo" 
+                  alt="PFHub Logo" 
                   width={48}
                   height={48}
                   className="w-full h-full object-contain rounded-lg"

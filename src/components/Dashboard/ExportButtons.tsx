@@ -33,7 +33,7 @@ export function ExportButtons() {
       })
       
       const link = document.createElement('a')
-      link.download = `pfh-portfolio-${new Date().toISOString().split('T')[0]}.png`
+      link.download = `pfhub-portfolio-${new Date().toISOString().split('T')[0]}.png`
       link.href = canvas.toDataURL('image/png')
       link.click()
     } catch (error) {
@@ -70,7 +70,7 @@ export function ExportButtons() {
       })
       
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height)
-      pdf.save(`pfh-portfolio-${new Date().toISOString().split('T')[0]}.pdf`)
+      pdf.save(`pfhub-portfolio-${new Date().toISOString().split('T')[0]}.pdf`)
     } catch (error) {
       console.error('PDF export failed:', error)
       alert('Failed to export PDF. Please try again.')
@@ -82,7 +82,7 @@ export function ExportButtons() {
   const handleCSVExport = () => {
     try {
       setExporting(true)
-      exportToCSV(tasks, `pfh-portfolio-${new Date().toISOString().split('T')[0]}.csv`)
+      exportToCSV(tasks, `pfhub-portfolio-${new Date().toISOString().split('T')[0]}.csv`)
     } catch (error) {
       console.error('CSV export failed:', error)
       alert('Failed to export CSV. Please try again.')

@@ -43,14 +43,14 @@ export default function ResetPasswordPage() {
           <div className="flex justify-center mb-4">
             <Image 
               src="/logo.png" 
-              alt="PFH Logo" 
+              alt="PFHub Logo" 
               width={80}
               height={80}
               className="rounded-lg"
               priority
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">PFH</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">PFHub</h1>
           <p className="text-gray-600">Portfolio Financial Hub</p>
         </div>
         <ResetPasswordForm 

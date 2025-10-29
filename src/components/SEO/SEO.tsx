@@ -12,15 +12,15 @@ interface SEOProps {
 }
 
 export function SEO({
-  title = 'PFH - Portfolio Financial Hub',
-  description = 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, and process maps.',
-  keywords = ['portfolio management', 'task management', 'bubble chart'],
+  title = 'PFHub - Portfolio Financial Hub',
+  description = 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and financial tracking.',
+  keywords = ['portfolio management', 'financial tracking', 'task management', 'bubble chart'],
   ogImage = '/og-image.png',
   ogType = 'website',
   canonicalUrl,
   noindex = false,
 }: SEOProps) {
-  const fullTitle = title.includes('PFH') ? title : `${title} | PFH`
+  const fullTitle = title.includes('PFHub') ? title : `${title} | PFHub`
   
   return (
     <Head>
