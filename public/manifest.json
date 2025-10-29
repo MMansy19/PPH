@@ -1,6 +1,6 @@
 {
-  "name": "Personal Process Hub",
-  "short_name": "PPH",
+  "name": "Portfolio Financial Hub",
+  "short_name": "PFH",
   "description": "Portfolio management with bubble charts, Kanban boards, and process maps",
   "start_url": "/",
   "display": "standalone",

@@ -2,8 +2,8 @@ export function generateWebApplicationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Personal Process Hub',
-    alternateName: 'PPH',
+    name: 'Portfolio Financial Hub',
+    alternateName: 'PFH',
     url: 'https://pph.vercel.app',
     description: 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, process maps, and data tables.',
     applicationCategory: 'BusinessApplication',
@@ -40,8 +40,8 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Personal Process Hub',
-    alternateName: 'PPH',
+    name: 'Portfolio Financial Hub',
+    alternateName: 'PFH',
     url: 'https://pph.vercel.app',
     logo: 'https://pph.vercel.app/logo.png',
     sameAs: [

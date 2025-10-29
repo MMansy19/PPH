@@ -12,7 +12,7 @@ interface SEOProps {
 }
 
 export function SEO({
-  title = 'PPH - Personal Process Hub',
+  title = 'PFH - Portfolio Financial Hub',
   description = 'Visualize and manage your portfolio with interactive bubble charts, Kanban boards, and process maps.',
   keywords = ['portfolio management', 'task management', 'bubble chart'],
   ogImage = '/og-image.png',
@@ -20,7 +20,7 @@ export function SEO({
   canonicalUrl,
   noindex = false,
 }: SEOProps) {
-  const fullTitle = title.includes('PPH') ? title : `${title} | PPH`
+  const fullTitle = title.includes('PFH') ? title : `${title} | PFH`
   
   return (
     <Head>

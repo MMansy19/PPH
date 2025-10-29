@@ -29,7 +29,7 @@ export async function exportToPNG(element: HTMLElement) {
   const html2canvas = (await import('html2canvas')).default
   const canvas = await html2canvas(element, { scale: 2 })
   const link = document.createElement('a')
-  link.download = 'pph-portfolio.png'
+  link.download = 'pfh-portfolio.png'
   link.href = canvas.toDataURL()
   link.click()
 }
@@ -38,7 +38,7 @@ export async function exportToSVG(flowRef: any) {
   if (!flowRef.current) return
   const svg = flowRef.current.getSvg()
   const link = document.createElement('a')
-  link.download = 'pph-flow.svg'
+  link.download = 'pfh-flow.svg'
   link.href = 'data:image/svg+xml;base64,' + btoa(svg.outerHTML)
   link.click()
 }
