@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { tasksService, type Task } from '@/lib/tasks'
+import { useTasksStore } from '@/store/useTasksStore'
+import { Task } from '@/types'
 
 interface TaskFormProps {
   workspaceId?: string
@@ -16,6 +17,8 @@ interface TaskFormProps {
 }
 
 export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpdated }: TaskFormProps) {
+  const { createTask, editTask, error } = useTasksStore()
+  
   const [formData, setFormData] = useState({
     title: task?.title || '',
     description: task?.description || '',
@@ -23,54 +26,50 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
     category: task?.category || 'big_bets' as const,
     value: task?.value || 50,
     risk: task?.risk || 50,
-    status: task?.status || 'todo'
+    status: task?.status || 'todo' as const,
+    duration: task?.duration || '1h',
+    entity_type: task?.entity_type || 'task' as const
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
+  const [formError, setFormError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!workspaceId) {
-      setError('No workspace selected')
+      setFormError('No workspace selected')
       return
     }
 
     setIsSubmitting(true)
-    setError('')
+    setFormError('')
     
     try {
       const taskData = {
         ...formData,
         workspace_id: workspaceId,
+        completed: false,
       }
 
+      let success = false
+      
       if (task?.id) {
         // Update existing task
-        const { data, error: updateError } = await tasksService.updateTask(task.id, taskData)
-        if (updateError) {
-          throw new Error(updateError.message || 'Failed to update task')
-        }
-        if (data && onTaskUpdated) {
-          onTaskUpdated(data)
-        }
+        success = await editTask(task.id, taskData)
       } else {
         // Create new task
-        const { data, error: createError } = await tasksService.createTask(taskData)
-        if (createError) {
-          console.error('Create task error:', createError)
-          throw new Error(createError.message || 'Failed to create task')
-        }
-        if (data && onTaskCreated) {
-          onTaskCreated(data)
-        }
+        success = await createTask(taskData)
       }
       
-      if (onClose) onClose()
+      if (success && onClose) {
+        onClose()
+      } else if (!success) {
+        setFormError(error || 'Failed to save task')
+      }
     } catch (error: any) {
       console.error('Error saving task:', error)
-      setError(error.message || 'An error occurred while saving the task')
+      setFormError(error.message || 'An error occurred while saving the task')
     } finally {
       setIsSubmitting(false)
     }
@@ -85,9 +84,9 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
+      {(formError || error) && (
         <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-          {error}
+          {formError || error}
         </div>
       )}
 
