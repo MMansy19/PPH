@@ -1,21 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useRequireAuth } from '@/hooks/useAuth'
-import { useAuth } from '@/contexts/AuthContext'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { ArrowLeft, Bell, Moon, Globe, Lock, Trash2, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, Bell, Moon, Lock, Trash2, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SettingsPage() {
-  const router = useRouter()
   const { user, loading: authLoading } = useRequireAuth('/auth/login')
-  const { signOut } = useAuth()
   const [settings, setSettings] = useState({
     emailNotifications: true,
     taskReminders: true,
@@ -60,31 +56,39 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container-responsive max-w-4xl">
-        {/* Header */}
-        <div className="mb-6">
-          <Button variant="ghost" size="sm" asChild className="mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-responsive safe-area-inset">
+      <div className="container-responsive max-w-5xl">
+        {/* Header - Responsive */}
+        <div className="mb-4 sm:mb-6 lg:mb-8 animate-fade-in">
+          <Button variant="ghost" size="sm" asChild className="mb-3 sm:mb-4 touch-target">
             <Link href="/app" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
+              <span className="text-sm sm:text-base">Back to Dashboard</span>
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600 mt-1">Manage your application preferences and account settings</p>
+          <h1 className="text-responsive-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Settings
+          </h1>
+          <p className="text-responsive text-gray-600 mt-1 sm:mt-2">
+            Manage your application preferences and account settings
+          </p>
         </div>
 
-        <div className="space-y-6">
-          {/* Notifications Settings */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Bell className="h-5 w-5 text-blue-600" />
-                <CardTitle>Notifications</CardTitle>
+        <div className="spacing-responsive">
+          {/* Notifications Settings - Responsive */}
+          <Card className="card-responsive animate-scale-in">
+            <CardHeader className="p-responsive">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-full">
+                  <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <CardTitle className="text-base sm:text-lg md:text-xl">Notifications</CardTitle>
               </div>
-              <CardDescription>Control how you receive notifications</CardDescription>
+              <CardDescription className="text-xs sm:text-sm mt-1 sm:mt-2">
+                Control how you receive notifications
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-responsive space-y-3 sm:space-y-4">
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="emailNotifications" className="text-base cursor-pointer">Email Notifications</Label>
@@ -260,8 +264,8 @@ export default function SettingsPage() {
 
           {/* Save Button */}
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => router.back()}>
-              Cancel
+            <Button variant="outline" asChild>
+              <Link href="/app">Cancel</Link>
             </Button>
             <Button onClick={handleSave} disabled={saving}>
               {saving ? 'Saving...' : 'Save Changes'}

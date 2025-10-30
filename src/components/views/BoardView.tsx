@@ -32,20 +32,20 @@ function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
   return (
     <Card 
       ref={drop as any}
-      className={`min-w-[300px] flex-1 transition-all ${isOver ? 'ring-2 ring-blue-400 scale-[1.02]' : ''} ${borderColor}`}
+      className={`min-w-[280px] sm:min-w-[300px] md:min-w-[320px] flex-1 transition-all duration-200 ${isOver ? 'ring-2 ring-blue-400 scale-[1.02] shadow-lg' : 'shadow-sm'} ${borderColor}`}
     >
-      <CardHeader className={`pb-3 ${bgColor}`}>
-        <CardTitle className="text-lg flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <span>{icon}</span>
-            <span>{title}</span>
+      <CardHeader className={`pb-2 sm:pb-3 px-3 sm:px-4 md:px-6 ${bgColor}`}>
+        <CardTitle className="text-sm sm:text-base md:text-lg flex items-center justify-between">
+          <span className="flex items-center gap-1.5 sm:gap-2">
+            <span className="text-base sm:text-lg">{icon}</span>
+            <span className="font-semibold">{title}</span>
           </span>
-          <span className="text-sm font-normal text-gray-500 bg-white px-2 py-1 rounded">
+          <span className="text-xs sm:text-sm font-normal text-gray-500 bg-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded whitespace-nowrap">
             {tasks.length}
           </span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 max-h-[600px] overflow-y-auto pt-4">
+      <CardContent className="space-y-2 max-h-[500px] sm:max-h-[600px] md:max-h-[650px] overflow-y-auto scrollbar-thin pt-3 sm:pt-4 px-2 sm:px-4 md:px-6">
         {tasks.length === 0 ? (
           <div className="text-center py-8 text-gray-400 text-sm">
             Drop tasks here
@@ -92,11 +92,11 @@ function BoardViewContent() {
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold">Kanban Board</h2>
-        <p className="text-gray-500 text-sm">Drag and drop tasks between columns to update status</p>
+      <div className="mb-3 sm:mb-4 md:mb-6">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold">Kanban Board</h2>
+        <p className="text-gray-500 text-xs sm:text-sm mt-1">Drag and drop tasks between columns to update status</p>
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-4">
+      <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 scrollbar-thin -mx-2 px-2 sm:mx-0 sm:px-0">
         <DropZone 
           status="todo" 
           title="To Do" 

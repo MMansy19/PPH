@@ -92,10 +92,6 @@ export function useResponsive() {
     isMobile,
     isTablet,
     isDesktop,
-    
-    // Utility functions
-    above: (breakpoint: Breakpoint) => useBreakpoint(breakpoint),
-    below: (breakpoint: Breakpoint) => !useBreakpoint(breakpoint),
   }
 }
 

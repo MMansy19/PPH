@@ -10,12 +10,32 @@ interface ResponsiveShowProps {
 export function ResponsiveShow({ above, below, children }: ResponsiveShowProps) {
   const responsive = useResponsive()
   
-  if (above && !responsive.above(above)) {
-    return null
+  // Check above breakpoint
+  if (above) {
+    const shouldShow = 
+      (above === 'xs' && responsive.isXs) ||
+      (above === 'sm' && responsive.isSm) ||
+      (above === 'md' && responsive.isMd) ||
+      (above === 'lg' && responsive.isLg) ||
+      (above === 'xl' && responsive.isXl) ||
+      (above === '2xl' && responsive.is2Xl) ||
+      (above === '3xl' && responsive.is3Xl)
+    
+    if (!shouldShow) return null
   }
   
-  if (below && !responsive.below(below)) {
-    return null
+  // Check below breakpoint
+  if (below) {
+    const shouldHide = 
+      (below === 'xs' && responsive.isXs) ||
+      (below === 'sm' && responsive.isSm) ||
+      (below === 'md' && responsive.isMd) ||
+      (below === 'lg' && responsive.isLg) ||
+      (below === 'xl' && responsive.isXl) ||
+      (below === '2xl' && responsive.is2Xl) ||
+      (below === '3xl' && responsive.is3Xl)
+    
+    if (shouldHide) return null
   }
   
   return <>{children}</>

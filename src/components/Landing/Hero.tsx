@@ -7,97 +7,121 @@ import { ArrowRight, PieChart, BarChart3, Map, DollarSign, TrendingUp } from 'lu
 
 export function Hero() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center safe-area-top safe-area-bottom">
-      <div className="container-responsive py-8 sm:py-12 lg:py-16">
-        <div className="max-w-6xl mx-auto text-center space-y-8 sm:space-y-12">
-          <div className="space-y-4 sm:space-y-6">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-balance">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center safe-area-inset overflow-x-hidden">
+      <div className="container-responsive py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="max-w-7xl mx-auto text-center spacing-responsive">
+          {/* Hero Text Section */}
+          <div className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-balance leading-tight px-2 sm:px-4">
               Portfolio Financial Hub
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed">
-              Visualize your portfolio with <span className="font-semibold text-purple-600">Bubble Charts</span> • 
-              Organize with <span className="font-semibold text-blue-600">Boards</span> • 
-              Track with <span className="font-semibold text-pink-600">Maps</span> • 
+            <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-5xl mx-auto text-balance leading-relaxed px-4 sm:px-6">
+              Visualize your portfolio with <span className="font-semibold text-purple-600">Bubble Charts</span>
+              <span className="hidden sm:inline"> • </span>
+              <br className="sm:hidden" />
+              Organize with <span className="font-semibold text-blue-600">Boards</span>
+              <span className="hidden sm:inline"> • </span>
+              <br className="sm:hidden" />
+              Track with <span className="font-semibold text-pink-600">Maps</span>
+              <span className="hidden sm:inline"> • </span>
+              <br className="sm:hidden" />
               Manage with <span className="font-semibold text-green-600">Financial Tools</span>
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
-            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <CardHeader className="pb-3 sm:pb-4">
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-7xl mx-auto px-2 sm:px-4">
+            {/* Portfolio View Card */}
+            <Card className="card-responsive hover:shadow-xl hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 group">
+              <CardHeader className="pb-2 sm:pb-3 md:pb-4 px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6">
                 <div className="flex justify-center mb-2 sm:mb-3">
-                  <PieChart className="h-10 w-10 sm:h-12 sm:w-12 text-blue-600" />
+                  <div className="p-2 sm:p-3 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors">
+                    <PieChart className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-blue-600 group-hover:scale-110 transition-transform" />
+                  </div>
                 </div>
-                <CardTitle className="text-blue-600 text-base sm:text-lg">Portfolio View</CardTitle>
+                <CardTitle className="text-blue-600 text-sm sm:text-base md:text-lg font-bold">Portfolio View</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <CardContent className="px-3 sm:px-4 md:px-6 pb-4 sm:pb-5 md:pb-6">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   15 colored bubbles in quadrants: Big Bets, Line Extensions, LTOs, Other
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <CardHeader className="pb-3 sm:pb-4">
+            {/* Multiple Views Card */}
+            <Card className="card-responsive hover:shadow-xl hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 group">
+              <CardHeader className="pb-2 sm:pb-3 md:pb-4 px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6">
                 <div className="flex justify-center mb-2 sm:mb-3">
-                  <BarChart3 className="h-10 w-10 sm:h-12 sm:w-12 text-purple-600" />
+                  <div className="p-2 sm:p-3 bg-purple-100 rounded-full group-hover:bg-purple-200 transition-colors">
+                    <BarChart3 className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-purple-600 group-hover:scale-110 transition-transform" />
+                  </div>
                 </div>
-                <CardTitle className="text-purple-600 text-base sm:text-lg">Multiple Views</CardTitle>
+                <CardTitle className="text-purple-600 text-sm sm:text-base md:text-lg font-bold">Multiple Views</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <CardContent className="px-3 sm:px-4 md:px-6 pb-4 sm:pb-5 md:pb-6">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   Switch between Board, Table, Map, Calendar, and List views instantly
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <CardHeader className="pb-3 sm:pb-4">
+            {/* Process Mapping Card */}
+            <Card className="card-responsive hover:shadow-xl hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 group">
+              <CardHeader className="pb-2 sm:pb-3 md:pb-4 px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6">
                 <div className="flex justify-center mb-2 sm:mb-3">
-                  <Map className="h-10 w-10 sm:h-12 sm:w-12 text-pink-600" />
+                  <div className="p-2 sm:p-3 bg-pink-100 rounded-full group-hover:bg-pink-200 transition-colors">
+                    <Map className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-pink-600 group-hover:scale-110 transition-transform" />
+                  </div>
                 </div>
-                <CardTitle className="text-pink-600 text-base sm:text-lg">Process Mapping</CardTitle>
+                <CardTitle className="text-pink-600 text-sm sm:text-base md:text-lg font-bold">Process Mapping</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <CardContent className="px-3 sm:px-4 md:px-6 pb-4 sm:pb-5 md:pb-6">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   Visual workflow mapping with drag-and-drop process flows
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
-              <CardHeader className="pb-3 sm:pb-4">
+            {/* Financial Hub Card */}
+            <Card className="card-responsive hover:shadow-xl hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 group bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 hover:border-green-300">
+              <CardHeader className="pb-2 sm:pb-3 md:pb-4 px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6">
                 <div className="flex justify-center mb-2 sm:mb-3">
-                  <div className="relative">
-                    <DollarSign className="h-10 w-10 sm:h-12 sm:w-12 text-green-600" />
-                    <TrendingUp className="h-5 w-5 text-green-500 absolute -bottom-1 -right-1" />
+                  <div className="relative p-2 sm:p-3 bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
+                    <DollarSign className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-green-600 group-hover:scale-110 transition-transform" />
+                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
                   </div>
                 </div>
-                <CardTitle className="text-green-600 text-base sm:text-lg">Financial Hub</CardTitle>
+                <CardTitle className="text-green-600 text-sm sm:text-base md:text-lg font-bold">Financial Hub</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <CardContent className="px-3 sm:px-4 md:px-6 pb-4 sm:pb-5 md:pb-6">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   Track income, expenses, budgets, and financial performance with reports
                 </p>
               </CardContent>
             </Card>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" asChild className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 touch-target w-full sm:w-auto">
-              <Link href="/app">
-                View Portfolio Chart
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+          {/* CTA Buttons */}
+          <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center items-stretch xs:items-center px-4 sm:px-6 max-w-2xl mx-auto">
+            <Button 
+              size="lg" 
+              asChild 
+              className="text-sm xs:text-base sm:text-lg px-5 xs:px-6 sm:px-8 py-4 sm:py-5 md:py-6 touch-target-lg w-full xs:flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <Link href="/app" className="flex items-center justify-center gap-2">
+                <span>View Portfolio Chart</span>
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button 
               size="lg" 
               asChild 
               variant="outline" 
-              className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 touch-target w-full sm:w-auto border-green-600 text-green-600 hover:bg-green-50"
+              className="text-sm xs:text-base sm:text-lg px-5 xs:px-6 sm:px-8 py-4 sm:py-5 md:py-6 touch-target-lg w-full xs:flex-1 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 font-semibold"
             >
-              <Link href="/app/financial">
-                Financial Dashboard
+              <Link href="/app/financial" className="flex items-center justify-center gap-2">
+                <DollarSign className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span>Financial Dashboard</span>
                 <DollarSign className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
             </Button>

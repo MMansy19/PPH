@@ -1,8 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/contexts/AuthContext'
 import { useRequireAuth } from '@/hooks/useAuth'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Button } from '@/components/ui/button'
@@ -13,7 +11,6 @@ import { ArrowLeft, Mail, User as UserIcon, Calendar, Shield } from 'lucide-reac
 import Link from 'next/link'
 
 export default function ProfilePage() {
-  const router = useRouter()
   const { user, loading: authLoading } = useRequireAuth('/auth/login')
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -81,48 +78,64 @@ export default function ProfilePage() {
   const lastSignIn = user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'N/A'
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container-responsive max-w-4xl">
-        {/* Header */}
-        <div className="mb-6">
-          <Button variant="ghost" size="sm" asChild className="mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-responsive safe-area-inset">
+      <div className="container-responsive max-w-5xl">
+        {/* Header - Responsive */}
+        <div className="mb-4 sm:mb-6 lg:mb-8 animate-fade-in">
+          <Button variant="ghost" size="sm" asChild className="mb-3 sm:mb-4 touch-target">
             <Link href="/app" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
+              <span className="text-sm sm:text-base">Back to Dashboard</span>
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
-          <p className="text-gray-600 mt-1">Manage your personal information and preferences</p>
+          <h1 className="text-responsive-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Profile
+          </h1>
+          <p className="text-responsive text-gray-600 mt-1 sm:mt-2">
+            Manage your personal information and preferences
+          </p>
         </div>
 
-        <div className="space-y-6">
-          {/* Profile Header Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white flex items-center justify-center text-2xl font-bold">
+        <div className="spacing-responsive">
+          {/* Profile Header Card - Responsive */}
+          <Card className="card-responsive animate-scale-in">
+            <CardHeader className="p-responsive">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                  <div className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white flex-center text-xl sm:text-2xl lg:text-3xl font-bold shadow-lg flex-shrink-0">
                     {getUserInitials()}
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">{user.user_metadata?.full_name || 'User'}</h2>
-                    <p className="text-gray-600">{user.email}</p>
+                  <div className="text-center sm:text-left">
+                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
+                      {user.user_metadata?.full_name || 'User'}
+                    </h2>
+                    <p className="text-sm sm:text-base text-gray-600 truncate max-w-xs sm:max-w-none">
+                      {user.email}
+                    </p>
                   </div>
                 </div>
                 {!isEditing && (
-                  <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+                  <Button 
+                    onClick={() => setIsEditing(true)} 
+                    size="sm" 
+                    className="w-full sm:w-auto touch-target whitespace-nowrap"
+                  >
+                    Edit Profile
+                  </Button>
                 )}
               </div>
             </CardHeader>
           </Card>
 
-          {/* Profile Information Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
-              <CardDescription>Update your personal details here</CardDescription>
+          {/* Profile Information Card - Responsive */}
+          <Card className="card-responsive animate-scale-in animation-delay-100">
+            <CardHeader className="p-responsive">
+              <CardTitle className="text-base sm:text-lg md:text-xl">Personal Information</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Update your personal details here
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-responsive space-y-3 sm:space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input
