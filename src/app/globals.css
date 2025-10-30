@@ -112,11 +112,11 @@
   
   /* Touch and accessibility */
   .touch-target {
-    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-start;
   }
   
   .touch-target-lg {
-    @apply min-h-[48px] min-w-[48px] flex items-center justify-center;
+    @apply min-h-[48px] min-w-[48px] flex items-center justify-start;
   }
   
   /* Safe area insets for mobile devices */

@@ -60,15 +60,15 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 my-2 ">
-            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6">
+            <Link href="/" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2">
               Home
             </Link>
             {user && (
               <>
-                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6 whitespace-nowrap">
+                <Link href="/app" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2 whitespace-nowrap">
                   Dashboard
                 </Link>
-                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6 whitespace-nowrap">
+                <Link href="/app/financial" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2 whitespace-nowrap">
                   Financial
                 </Link>
               </>
@@ -77,7 +77,7 @@ export function Header() {
               href="https://mahmoud-mansy.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target mt-6"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors touch-target py-2"
             >
               About
             </a>
@@ -92,7 +92,7 @@ export function Header() {
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-xs sm:text-sm font-medium">
                       {getUserInitials()}
                     </div>
-                    <span className="text-sm font-medium hidden xl:inline-block max-w-24 truncate">{getUserDisplayName()}</span>
+                    <span className="text-sm font-medium hidden xl:inline-block max-w-40 truncate">{getUserDisplayName()}</span>
                     <ChevronDown className="h-4 w-4 hidden xl:block" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -180,7 +180,7 @@ export function Header() {
               
               {/* Mobile Auth Section */}
               {loading ? (
-                <div className="w-full h-12 rounded bg-gray-200 animate-pulse mt-6" />
+                <div className="w-full h-12 rounded bg-gray-200 animate-pulse py-2" />
               ) : user ? (
                 <div className="flex flex-col gap-4 pt-4 border-t border-gray-100">
                   <div className="flex items-center gap-3 px-2 py-2">
