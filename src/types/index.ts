@@ -33,6 +33,12 @@ export interface Task {
   due_date?: string    // ISO date string
   tags?: string[]
   assignee?: string
+  
+  // Team collaboration fields
+  team_id?: string
+  assigned_to?: string
+  assigned_by?: string
+  assigned_at?: string
 }
 
 export type ViewMode = 'board' | 'table' | 'portfolio' | 'map' | 'calendar' | 'list'
