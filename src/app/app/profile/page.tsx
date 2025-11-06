@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { UsernameEditor } from '@/components/profile/UsernameEditor'
 import { ArrowLeft, Mail, User as UserIcon, Calendar, Shield } from 'lucide-react'
 import Link from 'next/link'
 
@@ -16,7 +17,6 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
-    username: '',
     bio: '',
   })
 
@@ -25,7 +25,6 @@ export default function ProfilePage() {
     if (user) {
       setFormData({
         fullName: user.user_metadata?.full_name || '',
-        username: user.user_metadata?.username || '',
         bio: user.user_metadata?.bio || '',
       })
     }
@@ -56,7 +55,6 @@ export default function ProfilePage() {
     // Reset form data
     setFormData({
       fullName: user?.user_metadata?.full_name || '',
-      username: user?.user_metadata?.username || '',
       bio: user?.user_metadata?.bio || '',
     })
     setIsEditing(false)
@@ -147,14 +145,15 @@ export default function ProfilePage() {
                 />
               </div>
 
+              {/* Username Editor - Always available for editing */}
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  disabled={!isEditing}
-                  placeholder="Enter your username"
+                <UsernameEditor
+                  userId={user.id}
+                  currentUsername={user.user_metadata?.username}
+                  onUpdate={(newUsername) => {
+                    console.log('Username updated to:', newUsername)
+                    // Optionally refresh user data or show success message
+                  }}
                 />
               </div>
 

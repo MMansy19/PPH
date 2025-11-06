@@ -443,14 +443,3 @@ export interface UsernameContextValue {
 export type {
   // Core types are already exported above
 }
-
-// Default export of commonly used types
-export default {
-  Team,
-  TeamMember,
-  TeamWithMembers,
-  CreateTeamInput,
-  AddMemberInput,
-  ServiceResponse,
-  TeamStatistics,
-}
