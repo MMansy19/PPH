@@ -10,19 +10,53 @@ import { Label } from '@/components/ui/label'
 import { UsernameEditor } from '@/components/profile/UsernameEditor'
 import { ArrowLeft, Mail, User as UserIcon, Calendar, Shield } from 'lucide-react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase'
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useRequireAuth('/auth/login')
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [username, setUsername] = useState<string | null>(null)
+  const [loadingUsername, setLoadingUsername] = useState(true)
   const [formData, setFormData] = useState({
     fullName: '',
     bio: '',
   })
 
+  const supabase = createClient()
+
+  // Fetch username from user_profiles table
+  useEffect(() => {
+    const fetchUsername = async () => {
+      if (!user?.id) return
+      
+      setLoadingUsername(true)
+      try {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('username')
+          .eq('id', user.id)
+          .maybeSingle() // Use maybeSingle instead of single to handle missing records
+
+        if (error) {
+          console.error('Error fetching username:', error)
+        } else if (data?.username) {
+          setUsername(data.username)
+        }
+      } catch (error) {
+        console.error('Error fetching username:', error)
+      } finally {
+        setLoadingUsername(false)
+      }
+    }
+
+    fetchUsername()
+  }, [user?.id, supabase])
+
   // Initialize form data when user loads
   useEffect(() => {
     if (user) {
+      console.log('User data:', user)
       setFormData({
         fullName: user.user_metadata?.full_name || '',
         bio: user.user_metadata?.bio || '',
@@ -107,6 +141,11 @@ export default function ProfilePage() {
                     <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
                       {user.user_metadata?.full_name || 'User'}
                     </h2>
+                    {username && (
+                      <p className="text-xs sm:text-sm text-blue-600 font-medium">
+                        @{username}
+                      </p>
+                    )}
                     <p className="text-sm sm:text-base text-gray-600 truncate max-w-xs sm:max-w-none">
                       {user.email}
                     </p>
@@ -149,10 +188,11 @@ export default function ProfilePage() {
               <div className="space-y-2">
                 <UsernameEditor
                   userId={user.id}
-                  currentUsername={user.user_metadata?.username}
+                  currentUsername={username || undefined}
                   onUpdate={(newUsername) => {
                     console.log('Username updated to:', newUsername)
-                    // Optionally refresh user data or show success message
+                    // Update the local state to show the new username immediately
+                    setUsername(newUsername)
                   }}
                 />
               </div>

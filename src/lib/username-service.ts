@@ -226,10 +226,13 @@ export class UsernameService {
   /**
    * Searches for users by username with autocomplete support
    * Case-insensitive prefix matching
+   * 
+   * Note: Searches ALL users globally since user_profiles is not workspace-specific.
+   * Workspace/team access control is handled when actually adding members.
    */
   async searchUsersByUsername(
     query: string,
-    workspaceId: string,
+    workspaceId: string, // Keep parameter for backwards compatibility, but not used
     limit: number = 10
   ): Promise<ServiceResponse<UserProfile[]>> {
     try {
@@ -240,10 +243,10 @@ export class UsernameService {
         }
       }
 
+      // Search ALL users - user_profiles is global, not workspace-specific
       const { data, error } = await this.supabase
         .from('user_profiles')
         .select('*')
-        .eq('workspace_id', workspaceId)
         .ilike('username', `${query}%`)
         .limit(limit)
         .order('username')
@@ -278,14 +281,54 @@ export class UsernameService {
   /**
    * Gets a user profile by username
    * Case-insensitive lookup
+   * 
+   * Note: Searches globally since user_profiles is not workspace-specific.
+   * Workspace parameter kept for backwards compatibility but not used.
    */
   async getUserByUsername(username: string, workspaceId: string): Promise<ServiceResponse<UserProfile | null>> {
     try {
       const { data, error } = await this.supabase
         .from('user_profiles')
         .select('*')
-        .eq('workspace_id', workspaceId)
         .ilike('username', username)
+        .maybeSingle()
+
+      if (error) {
+        return {
+          data: null,
+          error: {
+            code: 'FETCH_FAILED',
+            message: 'Failed to fetch user profile',
+            details: error
+          }
+        }
+      }
+
+      return {
+        data: data as UserProfile | null,
+        error: null
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: {
+          code: 'FETCH_ERROR',
+          message: 'An error occurred while fetching user profile',
+          details: error
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets a user profile by user ID
+   */
+  async getUserProfile(userId: string): Promise<ServiceResponse<UserProfile | null>> {
+    try {
+      const { data, error } = await this.supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
         .maybeSingle()
 
       if (error) {
