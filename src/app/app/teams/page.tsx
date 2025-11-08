@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRequireAuth } from '@/hooks/useAuth'
 import { useTeam } from '@/hooks/useTeam'
 import { useTeamMembers } from '@/hooks/useTeamMembers'
+import { useSelectedProject } from '@/hooks/useSelectedProject'
 import { TeamCreationModal } from '@/components/teams/TeamCreationModal'
 import { MemberInviteModal } from '@/components/teams/MemberInviteModal'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
@@ -31,7 +32,8 @@ import type { TeamWithMembers } from '@/types/team'
 
 export default function TeamsPage() {
   const { user, loading: authLoading } = useRequireAuth('/auth/login')
-  const { teams, loadUserTeams, createTeam, isLoading, error } = useTeam()
+  const { teams, loadProjectTeams, createTeam, isLoading, error } = useTeam()
+  const { selectedProject } = useSelectedProject()
   
   // Modal states
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -41,19 +43,19 @@ export default function TeamsPage() {
   // View state
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null)
 
-  // Load user's teams on mount
+  // Load project's teams when project is selected
   useEffect(() => {
-    if (user) {
-      loadUserTeams(user.id)
+    if (selectedProject?.id) {
+      loadProjectTeams(selectedProject.id)
     }
-  }, [user, loadUserTeams])
+  }, [selectedProject?.id, loadProjectTeams])
 
   // Handle team creation success
   const handleTeamCreated = (teamId: string) => {
     setShowCreateModal(false)
     // Refresh teams list
-    if (user) {
-      loadUserTeams(user.id)
+    if (selectedProject?.id) {
+      loadProjectTeams(selectedProject.id)
     }
   }
 
@@ -62,8 +64,8 @@ export default function TeamsPage() {
     setShowInviteModal(false)
     setSelectedTeam(null)
     // Refresh teams list
-    if (user) {
-      loadUserTeams(user.id)
+    if (selectedProject?.id) {
+      loadProjectTeams(selectedProject.id)
     }
   }
 
@@ -91,6 +93,43 @@ export default function TeamsPage() {
     return null
   }
 
+  // Show message if no project is selected
+  if (!selectedProject) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-responsive safe-area-inset">
+        <div className="container-responsive max-w-7xl">
+          <div className="mb-4 sm:mb-6 lg:mb-8 animate-fade-in">
+            <Button variant="ghost" size="sm" asChild className="mb-3 sm:mb-4 touch-target">
+              <Link href="/app" className="flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span className="text-sm sm:text-base">Back to Dashboard</span>
+              </Link>
+            </Button>
+          </div>
+          
+          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+            <div className="bg-white rounded-lg shadow-sm p-8 max-w-md mx-auto">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-blue-600" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                Select a Project
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Teams are organized within projects. Please select a project first to manage your teams.
+              </p>
+              <Button asChild>
+                <Link href="/app">
+                  Go to Projects
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-responsive safe-area-inset">
       <div className="container-responsive max-w-7xl">
@@ -109,7 +148,7 @@ export default function TeamsPage() {
                 Teams
               </h1>
               <p className="text-responsive text-gray-600 mt-1 sm:mt-2">
-                Collaborate with your team members on projects and tasks
+                Collaborate with your team members on projects and tasks in {selectedProject.name}
               </p>
             </div>
             
@@ -344,9 +383,9 @@ export default function TeamsPage() {
       </div>
 
       {/* Modals */}
-      {showCreateModal && (
+      {showCreateModal && selectedProject && (
         <TeamCreationModal
-          workspaceId="default-workspace" // Replace with actual workspace ID
+          projectId={selectedProject.id}
           adminId={user.id}
           isOpen={showCreateModal}
           onClose={() => setShowCreateModal(false)}
@@ -357,7 +396,7 @@ export default function TeamsPage() {
       {showInviteModal && selectedTeam && (
         <MemberInviteModal
           teamId={selectedTeam.id}
-          workspaceId={selectedTeam.workspace_id}
+          workspaceId={selectedProject?.workspace_id || ""}
           currentUserId={user.id}
           isOpen={showInviteModal}
           onClose={() => {
