@@ -343,6 +343,7 @@ export function ProjectDashboard({ project, onProjectUpdate }: ProjectDashboardP
       </Tabs>
 
       {/* Team Creation Modal */}
+      {showTeamModal && (
       <TeamCreationModal
         projectId={project.id}
         adminId={project.admin_id}
@@ -350,6 +351,7 @@ export function ProjectDashboard({ project, onProjectUpdate }: ProjectDashboardP
         onClose={() => setShowTeamModal(false)}
         onSuccess={handleTeamCreated}
       />
+      )}
     </div>
   )
 }

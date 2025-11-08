@@ -144,7 +144,7 @@ export class TeamService {
         .from('team_members')
         .select(`
           *,
-          user_profile:user_profiles(id, username, full_name, avatar_url, company)
+          user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
         `)
         .eq('team_id', teamId)
         .order('joined_at')
@@ -193,7 +193,7 @@ export class TeamService {
           *,
           members:team_members(
             *,
-            user_profile:user_profiles(id, username, full_name, avatar_url, company)
+            user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
           )
         `)
         .eq('workspace_id', workspaceId)
@@ -245,7 +245,7 @@ export class TeamService {
           *,
           members:team_members(
             *,
-            user_profile:user_profiles(id, username, full_name, avatar_url, company)
+            user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
           ),
           project:projects(id, name, status)
         `)
@@ -300,7 +300,7 @@ export class TeamService {
           *,
           members:team_members(
             *,
-            user_profile:user_profiles(id, username, full_name, avatar_url, company)
+            user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
           ),
           project:projects(id, name, status)
         `)
@@ -353,7 +353,7 @@ export class TeamService {
             *,
             members:team_members(
               *,
-              user_profile:user_profiles(id, username, full_name, avatar_url, company)
+              user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
             )
           )
         `)

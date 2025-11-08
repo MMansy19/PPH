@@ -169,7 +169,7 @@ export class ProjectService {
             *,
             members:team_members(
               *,
-              user_profile:user_profiles(id, username, full_name, avatar_url, company)
+              user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
             )
           `)
           .eq('project_id', projectId)
@@ -210,7 +210,7 @@ export class ProjectService {
                   .from('team_members')
                   .select(`
                     *,
-                    user_profile:user_profiles(id, username, full_name, avatar_url, company)
+                    user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
                   `)
                   .eq('team_id', team.id)
 
@@ -302,7 +302,7 @@ export class ProjectService {
               *,
               members:team_members(
                 *,
-                user_profile:user_profiles(id, username, full_name, avatar_url, company)
+                user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
               )
             )
           `)
@@ -349,7 +349,7 @@ export class ProjectService {
                     *,
                     members:team_members(
                       *,
-                      user_profile:user_profiles(id, username, full_name, avatar_url, company)
+                      user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
                     )
                   `)
                   .eq('project_id', project.id)
@@ -499,7 +499,7 @@ export class ProjectService {
             *,
             members:team_members(
               *,
-              user_profile:user_profiles(id, username, full_name, avatar_url, company)
+              user_profile:user_profiles!team_members_user_id_fkey(id, username, full_name, avatar_url, company)
             )
           )
         `)
