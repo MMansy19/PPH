@@ -13,6 +13,7 @@ import { TeamService } from '@/lib/team-service'
 import { tasksService } from '@/lib/tasks'
 import { ProjectCard } from './ProjectCard'
 import { TeamCreationModal } from '@/components/teams/TeamCreationModal'
+import { TeamManagementModal } from '@/components/teams/TeamManagementModal'
 import { BoardView } from '@/components/views/BoardView'
 import {
   FolderOpen,
@@ -37,6 +38,7 @@ export function ProjectDashboard({ project, onProjectUpdate }: ProjectDashboardP
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
   const [showTeamModal, setShowTeamModal] = useState(false)
+  const [selectedTeam, setSelectedTeam] = useState<TeamWithMembers | null>(null)
 
   const projectService = new ProjectService()
   const teamService = new TeamService()
@@ -295,7 +297,11 @@ export function ProjectDashboard({ project, onProjectUpdate }: ProjectDashboardP
                       <CardDescription>{team.description}</CardDescription>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setSelectedTeam(team)}
+                  >
                     Manage Team
                   </Button>
                 </div>
@@ -344,13 +350,27 @@ export function ProjectDashboard({ project, onProjectUpdate }: ProjectDashboardP
 
       {/* Team Creation Modal */}
       {showTeamModal && (
-      <TeamCreationModal
-        projectId={project.id}
-        adminId={project.admin_id}
-        isOpen={showTeamModal}
-        onClose={() => setShowTeamModal(false)}
-        onSuccess={handleTeamCreated}
-      />
+        <TeamCreationModal
+          projectId={project.id}
+          adminId={project.admin_id}
+          isOpen={showTeamModal}
+          onClose={() => setShowTeamModal(false)}
+          onSuccess={handleTeamCreated}
+        />
+      )}
+
+      {/* Team Management Modal */}
+      {selectedTeam && (
+        <TeamManagementModal
+          team={selectedTeam}
+          workspaceId={project.workspace_id}
+          isOpen={!!selectedTeam}
+          onClose={() => setSelectedTeam(null)}
+          onUpdate={() => {
+            loadProjectData()
+            setSelectedTeam(null)
+          }}
+        />
       )}
     </div>
   )

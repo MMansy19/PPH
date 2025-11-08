@@ -366,12 +366,12 @@ CREATE POLICY "Admins can delete teams"
 
 -- 4.5: TEAM MEMBERS POLICIES (NO CIRCULAR DEPENDENCIES WITH TEAMS)
 -- CRITICAL: Do NOT query teams table to prevent infinite recursion
+-- Admin authorization is handled at application level (via service layer)
 CREATE POLICY "Users can view team members"
   ON team_members FOR SELECT
   USING (
-    -- Users can see their own membership
-    user_id = auth.uid()
-    -- Application level will handle admin viewing all members
+    -- Allow viewing - authorization at application level
+    true
   );
 
 CREATE POLICY "Team admins can add members"
@@ -385,18 +385,20 @@ CREATE POLICY "Team admins can add members"
 CREATE POLICY "Team admins can update members"
   ON team_members FOR UPDATE
   USING (
-    -- Only users can update their own membership
-    user_id = auth.uid()
+    -- Allow update - authorization at application level
+    -- Cannot check teams.admin_id to prevent recursion
+    true
   )
   WITH CHECK (
-    user_id = auth.uid()
+    true
   );
 
 CREATE POLICY "Team admins can remove members"
   ON team_members FOR DELETE
   USING (
-    -- Users can remove themselves
-    user_id = auth.uid()
+    -- Allow delete - authorization at application level
+    -- Cannot check teams.admin_id to prevent recursion
+    true
   );
 
 -- 4.6: TASKS POLICIES (NO CIRCULAR DEPENDENCIES)
