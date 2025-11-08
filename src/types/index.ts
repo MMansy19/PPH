@@ -13,12 +13,13 @@ export interface Workspace {
 export interface Task {
   id: string
   workspace_id: string
+  project_id?: string  // New: Direct project association
   title: string
   description?: string
   duration: string
   priority: 'high' | 'medium' | 'low'
   entity_type: 'task' | 'event' | 'activity' | 'process'
-  status: 'todo' | 'in-progress' | 'done'
+  status: 'todo' | 'in-progress' | 'review' | 'done'  // Added 'review' state
   completed: boolean
   chain_id?: string
   x?: number

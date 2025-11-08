@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useTasksStore } from '@/store/useTasksStore'
+import { ProjectSelectorCompact } from '@/components/projects/ProjectSelectorCompact'
+import { useSelectedProject } from '@/hooks/useSelectedProject'
 import type { ViewMode } from '@/types'
 import { 
   LayoutDashboard, 
@@ -16,7 +18,9 @@ import {
   Map,
   ChevronLeft,
   ChevronRight,
-  Eye
+  Eye,
+  FolderOpen,
+  Users
 } from 'lucide-react'
 
 const navigationItems = [
@@ -25,6 +29,18 @@ const navigationItems = [
     href: '/app',
     icon: LayoutDashboard,
     description: 'Portfolio overview and main dashboard'
+  },
+  {
+    name: 'Projects',
+    href: '/app/projects',
+    icon: FolderOpen,
+    description: 'Manage projects and organize teams'
+  },
+  {
+    name: 'Teams',
+    href: '/app/teams',
+    icon: Users,
+    description: 'Team collaboration and management'
   },
   {
     name: 'Financial',
@@ -84,9 +100,10 @@ interface AppNavigationProps {
 
 export function AppNavigation({ className }: AppNavigationProps) {
   const pathname = usePathname()
-  const { viewMode, setViewMode } = useTasksStore()
+  const { viewMode, setViewMode, currentWorkspaceId } = useTasksStore()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [viewsExpanded, setViewsExpanded] = useState(true)
+  const { selectedProject, setSelectedProject } = useSelectedProject()
 
   const isOnDashboard = pathname === '/app'
 
@@ -111,6 +128,27 @@ export function AppNavigation({ className }: AppNavigationProps) {
 
       <div className="h-full px-3 py-8 overflow-y-auto w-full">
         <div className="space-y-6">
+          {/* Project Selector */}
+          {!isCollapsed && (
+            <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <h3 className="mb-3 px-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Current Project
+              </h3>
+              <div className="px-3">
+                {currentWorkspaceId && (
+                  <ProjectSelectorCompact 
+                    workspaceId={currentWorkspaceId}
+                    selectedProjectId={selectedProject?.id}
+                    onProjectSelect={(project) => {
+                      setSelectedProject(project)
+                      console.log('Selected project:', project)
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Main Navigation */}
           <div>
             {!isCollapsed && (

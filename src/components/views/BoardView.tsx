@@ -8,11 +8,11 @@ import { DraggableTask } from '@/components/dnd/DraggableTask'
 import { Task } from '@/types'
 
 interface DropZoneProps {
-  status: 'todo' | 'in-progress' | 'done'
+  status: 'todo' | 'in-progress' | 'review' | 'done'
   title: string
   icon: string
   tasks: Task[]
-  onDrop: (taskId: string, newStatus: 'todo' | 'in-progress' | 'done') => void
+  onDrop: (taskId: string, newStatus: 'todo' | 'in-progress' | 'review' | 'done') => void
 }
 
 function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
@@ -26,8 +26,12 @@ function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
     }),
   }), [status, onDrop])
 
-  const bgColor = status === 'todo' ? 'bg-gray-50' : status === 'in-progress' ? 'bg-blue-50' : 'bg-green-50'
-  const borderColor = status === 'todo' ? 'border-gray-200' : status === 'in-progress' ? 'border-blue-200' : 'border-green-200'
+  const bgColor = status === 'todo' ? 'bg-gray-50' : 
+                 status === 'in-progress' ? 'bg-blue-50' : 
+                 status === 'review' ? 'bg-orange-50' : 'bg-green-50'
+  const borderColor = status === 'todo' ? 'border-gray-200' : 
+                     status === 'in-progress' ? 'border-blue-200' : 
+                     status === 'review' ? 'border-orange-200' : 'border-green-200'
 
   return (
     <Card 
@@ -60,16 +64,27 @@ function DropZone({ status, title, icon, tasks, onDrop }: DropZoneProps) {
   )
 }
 
-function BoardViewContent() {
+interface BoardViewContentProps {
+  projectId?: string
+}
+
+function BoardViewContent({ projectId }: BoardViewContentProps = {}) {
   const { currentWorkspaceId, tasks, editTask } = useTasksStore()
 
-  // Filter tasks by current workspace and group by status
-  const workspaceTasks = tasks.filter(t => t.workspace_id === currentWorkspaceId)
-  const todoTasks = workspaceTasks.filter(t => t.status === 'todo')
-  const inProgressTasks = workspaceTasks.filter(t => t.status === 'in-progress')
-  const doneTasks = workspaceTasks.filter(t => t.status === 'done')
+  // Filter tasks by project if specified, otherwise by workspace, then group by status
+  const filteredTasks = tasks.filter(t => {
+    if (projectId) {
+      return t.project_id === projectId
+    }
+    return t.workspace_id === currentWorkspaceId
+  })
+  
+  const todoTasks = filteredTasks.filter(t => t.status === 'todo')
+  const inProgressTasks = filteredTasks.filter(t => t.status === 'in-progress')
+  const reviewTasks = filteredTasks.filter(t => t.status === 'review')
+  const doneTasks = filteredTasks.filter(t => t.status === 'done')
 
-  const handleDrop = async (taskId: string, newStatus: 'todo' | 'in-progress' | 'done') => {
+  const handleDrop = async (taskId: string, newStatus: 'todo' | 'in-progress' | 'review' | 'done') => {
     const updates: Partial<Task> = {
       status: newStatus,
       completed: newStatus === 'done'
@@ -82,10 +97,10 @@ function BoardViewContent() {
     }
   }
 
-  if (!currentWorkspaceId) {
+  if (!projectId && !currentWorkspaceId) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600">Please select a workspace to view tasks</p>
+        <p className="text-gray-600">Please select a {projectId ? 'project' : 'workspace'} to view tasks</p>
       </div>
     )
   }
@@ -112,6 +127,13 @@ function BoardViewContent() {
           onDrop={handleDrop}
         />
         <DropZone 
+          status="review" 
+          title="Review" 
+          icon="👀"
+          tasks={reviewTasks}
+          onDrop={handleDrop}
+        />
+        <DropZone 
           status="done" 
           title="Done" 
           icon="✅"
@@ -123,10 +145,10 @@ function BoardViewContent() {
   )
 }
 
-export function BoardView() {
+export function BoardView({ projectId }: { projectId?: string } = {}) {
   return (
     <DndProvider backend={HTML5Backend}>
-      <BoardViewContent />
+      <BoardViewContent projectId={projectId} />
     </DndProvider>
   )
 }
