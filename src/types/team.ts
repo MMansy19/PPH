@@ -3,18 +3,99 @@
 // PPH - Personal Process Hub
 // ========================================
 // This file contains all TypeScript interfaces and types
-// for the team collaboration feature
+// for the team collaboration feature with multi-project support
 
 // ========================================
-// CORE TEAM TYPES
+// PROJECT TYPES (NEW)
 // ========================================
 
 /**
- * Team entity representing a collaborative group within a workspace
+ * Project entity representing a major initiative within a workspace
+ */
+export interface Project {
+  id: string
+  workspace_id: string
+  name: string
+  description?: string
+  admin_id: string
+  status: ProjectStatus
+  start_date?: string
+  end_date?: string
+  budget?: number
+  avatar_url?: string
+  settings: ProjectSettings
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+/**
+ * Project status types
+ */
+export type ProjectStatus = 'planning' | 'active' | 'on_hold' | 'completed' | 'cancelled'
+
+/**
+ * Project settings configuration
+ */
+export interface ProjectSettings {
+  allow_team_assignment?: boolean
+  task_assignment_rules?: 'admin_only' | 'team_leads' | 'all_members'
+  visibility?: 'private' | 'workspace'
+  auto_archive_completed?: boolean
+  max_teams?: number
+  [key: string]: any
+}
+
+/**
+ * Project with teams and statistics
+ */
+export interface ProjectWithTeams extends Project {
+  teams: TeamWithMembers[]
+  team_count: number
+  task_count: number
+  completed_task_count: number
+  progress_percentage: number
+}
+
+/**
+ * Input for creating a new project
+ */
+export interface CreateProjectInput {
+  workspace_id: string
+  name: string
+  description?: string
+  status?: ProjectStatus
+  start_date?: string
+  end_date?: string
+  budget?: number
+  settings?: Partial<ProjectSettings>
+}
+
+/**
+ * Input for updating a project
+ */
+export interface UpdateProjectInput {
+  name?: string
+  description?: string
+  status?: ProjectStatus
+  start_date?: string
+  end_date?: string
+  budget?: number
+  avatar_url?: string
+  settings?: Partial<ProjectSettings>
+  is_active?: boolean
+}
+
+// ========================================
+// CORE TEAM TYPES (UPDATED)
+// ========================================
+
+/**
+ * Team entity representing a collaborative group within a project
  */
 export interface Team {
   id: string
-  workspace_id: string
+  project_id: string  // Changed from workspace_id to project_id
   name: string
   description?: string
   admin_id: string
@@ -31,8 +112,9 @@ export interface Team {
 export interface TeamSettings {
   max_members?: number
   allow_member_invite?: boolean
-  task_assignment_rules?: 'admin_only' | 'all_members'
-  visibility?: 'private' | 'workspace'
+  task_assignment_rules?: 'admin_only' | 'team_leads' | 'all_members'
+  visibility?: 'private' | 'project' | 'workspace'
+  can_create_tasks?: boolean
   [key: string]: any // Allow additional custom settings
 }
 
@@ -116,7 +198,7 @@ export type TeamAction =
  * Input for creating a new team
  */
 export interface CreateTeamInput {
-  workspace_id: string
+  project_id: string  // Changed from workspace_id to project_id
   name: string
   description?: string
   settings?: Partial<TeamSettings>
@@ -200,17 +282,18 @@ export interface UpdateUsernameInput {
 // ========================================
 
 /**
- * Extended task with team assignment information
+ * Extended task with project and team assignment information
  */
 export interface TaskWithTeam {
   id: string
   workspace_id: string
+  project_id: string        // New: Direct project association
   title: string
   description?: string
   duration: string
   priority: 'high' | 'medium' | 'low'
   entity_type: 'task' | 'event' | 'activity' | 'process'
-  status: 'todo' | 'in-progress' | 'done'
+  status: 'todo' | 'in-progress' | 'review' | 'done'  // Added 'review' status
   completed: boolean
   
   // Team collaboration fields
@@ -220,6 +303,7 @@ export interface TaskWithTeam {
   assigned_at?: string
   
   // Related data
+  project?: Project       // New: Project information
   team?: Team
   assignee?: UserProfile
   assigner?: UserProfile

@@ -36,18 +36,49 @@ export class TeamService {
   // ========================================
 
   /**
-   * Creates a new team within a workspace
+   * Creates a new team within a project
    * The current user becomes the team admin automatically
    */
   async createTeam(input: CreateTeamInput, adminId: string): Promise<ServiceResponse<Team>> {
     try {
-      const { workspace_id, name, description, settings } = input
+      const { project_id, name, description, settings } = input
+
+      // Validate that project_id is provided for new project-based architecture
+      if (!project_id) {
+        return {
+          data: null,
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'Project ID is required to create a team',
+            details: 'Teams must be assigned to a project in the new multi-project architecture'
+          }
+        }
+      }
+
+      // Get workspace_id from the project
+      const { data: project, error: projectError } = await this.supabase
+        .from('projects')
+        .select('workspace_id')
+        .eq('id', project_id)
+        .single()
+
+      if (projectError || !project) {
+        return {
+          data: null,
+          error: {
+            code: 'PROJECT_NOT_FOUND',
+            message: 'Project not found',
+            details: projectError
+          }
+        }
+      }
 
       // Insert team
       const { data: team, error } = await this.supabase
         .from('teams')
         .insert({
-          workspace_id,
+          project_id,
+          workspace_id: project.workspace_id,
           name,
           description,
           admin_id: adminId,
@@ -152,7 +183,7 @@ export class TeamService {
   }
 
   /**
-   * Gets all teams for a workspace
+   * Gets all teams for a workspace (legacy method for backwards compatibility)
    */
   async getWorkspaceTeams(workspaceId: string): Promise<ServiceResponse<TeamWithMembers[]>> {
     try {
@@ -195,6 +226,114 @@ export class TeamService {
         error: {
           code: 'FETCH_ERROR',
           message: 'An error occurred while fetching workspace teams',
+          details: error
+        }
+      }
+    }
+  }
+
+
+
+  /**
+   * Gets all teams for a specific project
+   */
+  async getProjectTeams(projectId: string): Promise<ServiceResponse<TeamWithMembers[]>> {
+    try {
+      const { data: teams, error } = await this.supabase
+        .from('teams')
+        .select(`
+          *,
+          members:team_members(
+            *,
+            user_profile:user_profiles(id, username, full_name, avatar_url, company)
+          ),
+          project:projects(id, name, status)
+        `)
+        .eq('project_id', projectId)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        return {
+          data: null,
+          error: {
+            code: 'FETCH_FAILED',
+            message: 'Failed to fetch project teams',
+            details: error
+          }
+        }
+      }
+
+      const teamsWithMembers: TeamWithMembers[] = teams.map(team => ({
+        ...team,
+        member_count: team.members?.length || 0
+      }))
+
+      return {
+        data: teamsWithMembers,
+        error: null
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: {
+          code: 'FETCH_ERROR',
+          message: 'An error occurred while fetching project teams',
+          details: error
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets all teams for multiple projects (useful for workspace views)
+   */
+  async getProjectsTeams(projectIds: string[]): Promise<ServiceResponse<TeamWithMembers[]>> {
+    try {
+      if (projectIds.length === 0) {
+        return { data: [], error: null }
+      }
+
+      const { data: teams, error } = await this.supabase
+        .from('teams')
+        .select(`
+          *,
+          members:team_members(
+            *,
+            user_profile:user_profiles(id, username, full_name, avatar_url, company)
+          ),
+          project:projects(id, name, status)
+        `)
+        .in('project_id', projectIds)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        return {
+          data: null,
+          error: {
+            code: 'FETCH_FAILED',
+            message: 'Failed to fetch teams for projects',
+            details: error
+          }
+        }
+      }
+
+      const teamsWithMembers: TeamWithMembers[] = teams.map(team => ({
+        ...team,
+        member_count: team.members?.length || 0
+      }))
+
+      return {
+        data: teamsWithMembers,
+        error: null
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: {
+          code: 'FETCH_ERROR',
+          message: 'An error occurred while fetching teams for projects',
           details: error
         }
       }

@@ -12,7 +12,7 @@ import { Loader2, Users, AlertCircle } from 'lucide-react'
 import type { CreateTeamInput, TeamSettings } from '@/types/team'
 
 interface TeamCreationModalProps {
-  workspaceId: string
+  projectId: string
   adminId: string
   isOpen: boolean
   onClose: () => void
@@ -29,7 +29,7 @@ interface TeamCreationModalProps {
  * - Loading and error states
  */
 export function TeamCreationModal({
-  workspaceId,
+  projectId,
   adminId,
   isOpen,
   onClose,
@@ -86,7 +86,7 @@ export function TeamCreationModal({
     }
 
     const input: CreateTeamInput = {
-      workspace_id: workspaceId,
+      project_id: projectId,
       name: name.trim(),
       description: description.trim() || undefined,
       settings
@@ -140,7 +140,7 @@ export function TeamCreationModal({
             <div>
               <h2 className="text-xl font-semibold">Create New Team</h2>
               <p className="text-sm text-muted-foreground">
-                Set up a team to collaborate with others
+                Create a team within this project to collaborate on tasks
               </p>
             </div>
           </div>

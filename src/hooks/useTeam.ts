@@ -80,6 +80,34 @@ export function useTeam(teamId?: string) {
   }, [])
 
   /**
+   * Loads all teams for a project
+   */
+  const loadProjectTeams = useCallback(async (projectId: string) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await teamService.getProjectTeams(projectId)
+      
+      if (response.error) {
+        setError(response.error.message)
+        setTeams([])
+        return []
+      }
+
+      setTeams(response.data || [])
+      return response.data || []
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to load teams'
+      setError(message)
+      setTeams([])
+      return []
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  /**
    * Loads all teams for a user
    */
   const loadUserTeams = useCallback(async (userId: string) => {
@@ -289,6 +317,7 @@ export function useTeam(teamId?: string) {
     // Methods
     loadTeam,
     loadWorkspaceTeams,
+    loadProjectTeams,
     loadUserTeams,
     createTeam,
     updateTeam,
