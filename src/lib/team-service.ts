@@ -498,11 +498,10 @@ export class TeamService {
         }
       }
 
-      // Find user by username in the same workspace
+      // Find user by username (global search - users are not workspace-specific)
       const { data: userProfile, error: userError } = await this.supabase
         .from('user_profiles')
         .select('id')
-        .eq('workspace_id', team.workspace_id)
         .ilike('username', username)
         .single()
 
@@ -511,7 +510,7 @@ export class TeamService {
           data: null,
           error: {
             code: 'USER_NOT_FOUND',
-            message: `User with username "${username}" not found in this workspace`
+            message: `User with username "${username}" not found`
           }
         }
       }

@@ -21,6 +21,22 @@ export async function GET(request: Request) {
       const { error } = await supabase.auth.exchangeCodeForSession(code)
       
       if (!error) {
+        // Check if user has set username
+        const { data: { user } } = await supabase.auth.getUser()
+        
+        if (user) {
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('username')
+            .eq('id', user.id)
+            .single()
+          
+          // If no username, redirect to setup page
+          if (!profile?.username) {
+            return NextResponse.redirect(`${origin}/auth/setup-username`)
+          }
+        }
+        
         const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
         const isLocalEnv = process.env.NODE_ENV === 'development'
         
