@@ -14,7 +14,12 @@ export class TasksService {
         return { data: null, error: { message: 'User not authenticated' } }
       }
 
-      console.log('Creating task for user:', user.id, 'in workspace:', task.workspace_id)
+      console.log('Creating task for user:', user.id, 'in workspace:', task.workspace_id, 'project:', task.project_id)
+
+      // Validate project_id is provided for new multi-project architecture
+      if (!task.project_id) {
+        return { data: null, error: { message: 'Project ID is required to create a task' } }
+      }
 
       // Convert percentage values to 1-10 scale for database
       const taskData = {
@@ -128,7 +133,7 @@ export class TasksService {
         ...task,
         value: task.value ? task.value * 10 : 50,
         risk: task.risk ? task.risk * 10 : 50,
-        status: task.status as 'todo' | 'in-progress' | 'done',
+        status: task.status as 'todo' | 'in-progress' | 'review' | 'done',
         priority: task.priority as 'high' | 'medium' | 'low',
         entity_type: task.entity_type as 'task' | 'event' | 'activity' | 'process',
         category: task.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'
@@ -137,6 +142,81 @@ export class TasksService {
       return { data: tasksWithPercentages || [], error }
     } catch (error) {
       console.error('Error fetching tasks:', error)
+      return { data: null, error }
+    }
+  }
+
+  async getTasksByProject(projectId: string): Promise<{ data: Task[] | null; error: any }> {
+    try {
+      const { data, error } = await this.supabase
+        .from('tasks')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false })
+
+      // Convert database values back to percentage scale for UI
+      const tasksWithPercentages = data?.map(task => ({
+        ...task,
+        value: task.value ? task.value * 10 : 50,
+        risk: task.risk ? task.risk * 10 : 50,
+        status: task.status as 'todo' | 'in-progress' | 'review' | 'done',
+        priority: task.priority as 'high' | 'medium' | 'low',
+        entity_type: task.entity_type as 'task' | 'event' | 'activity' | 'process',
+        category: task.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'
+      }))
+
+      return { data: tasksWithPercentages || [], error }
+    } catch (error) {
+      console.error('Error fetching project tasks:', error)
+      return { data: null, error }
+    }
+  }
+
+  async getTasksByTeamAndProject(teamId: string, projectId: string): Promise<{ data: Task[] | null; error: any }> {
+    try {
+      const { data, error } = await this.supabase
+        .from('tasks')
+        .select('*')
+        .eq('team_id', teamId)
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false })
+
+      // Convert database values back to percentage scale for UI
+      const tasksWithPercentages = data?.map(task => ({
+        ...task,
+        value: task.value ? task.value * 10 : 50,
+        risk: task.risk ? task.risk * 10 : 50,
+        status: task.status as 'todo' | 'in-progress' | 'review' | 'done',
+        priority: task.priority as 'high' | 'medium' | 'low',
+        entity_type: task.entity_type as 'task' | 'event' | 'activity' | 'process',
+        category: task.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'
+      }))
+
+      return { data: tasksWithPercentages || [], error }
+    } catch (error) {
+      console.error('Error fetching team project tasks:', error)
+      return { data: null, error }
+    }
+  }
+
+  async moveTaskToProject(taskId: string, projectId: string): Promise<{ data: Task | null; error: any }> {
+    try {
+      const { data, error } = await this.supabase
+        .from('tasks')
+        .update({ project_id: projectId })
+        .eq('id', taskId)
+        .select()
+        .single()
+
+      // Convert database values back to percentage scale for UI
+      if (data) {
+        data.value = data.value * 10
+        data.risk = data.risk * 10
+      }
+
+      return { data, error }
+    } catch (error) {
+      console.error('Error moving task to project:', error)
       return { data: null, error }
     }
   }
@@ -153,7 +233,7 @@ export class TasksService {
       if (data) {
         data.value = data.value ? data.value * 10 : 50
         data.risk = data.risk ? data.risk * 10 : 50
-        data.status = data.status as 'todo' | 'in-progress' | 'done'
+        data.status = data.status as 'todo' | 'in-progress' | 'review' | 'done'
         data.priority = data.priority as 'high' | 'medium' | 'low'
         data.entity_type = data.entity_type as 'task' | 'event' | 'activity' | 'process'
         data.category = data.category as 'big_bets' | 'line_extensions' | 'ltos' | 'other'

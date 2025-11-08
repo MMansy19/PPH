@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { useTasksStore } from '@/store/useTasksStore'
+import { useSelectedProject } from '@/hooks/useSelectedProject'
 import { Task } from '@/types'
 
 interface TaskFormProps {
@@ -18,6 +19,7 @@ interface TaskFormProps {
 
 export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpdated }: TaskFormProps) {
   const { createTask, editTask, error } = useTasksStore()
+  const { selectedProject } = useSelectedProject()
   
   const [formData, setFormData] = useState({
     title: task?.title || '',
@@ -49,9 +51,16 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
     setFormError('')
     
     try {
+      // Check if project is selected
+      if (!selectedProject?.id) {
+        setFormError('Please select a project first before creating tasks')
+        return
+      }
+
       const taskData = {
         ...formData,
         workspace_id: workspaceId,
+        project_id: selectedProject.id,
         completed: false,
       }
 
@@ -90,6 +99,28 @@ export function TaskForm({ workspaceId, onClose, task, onTaskCreated, onTaskUpda
       {(formError || error) && (
         <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
           {formError || error}
+        </div>
+      )}
+
+      {/* Project Info */}
+      {selectedProject ? (
+        <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-blue-900">
+                Creating task in: <span className="font-semibold">{selectedProject.name}</span>
+              </p>
+              <p className="text-xs text-blue-700">
+                {selectedProject.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+          <p className="text-sm text-yellow-800">
+            ⚠️ No project selected. Please select a project first to create tasks.
+          </p>
         </div>
       )}
 
